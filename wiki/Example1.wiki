@@ -1,5 +1,5 @@
 #summary An example to help you to use django-ads
-#labels example
+#labels Example,Featured
 
 = Insert 3 ads by admin =
 
