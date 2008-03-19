@@ -5,24 +5,30 @@
 
 == Ad 1 ==
 
-  * name: 'ad 1'
-  * group: 'first-group'
-  * template_body: 'my ad number 1'
-  * url_pattern: None
+{{{
+name: 'ad 1'
+group: 'first-group'
+template_body: 'my ad number 1'
+url_pattern: None
+}}}
 
 == Ad 2 ==
 
-  * name: 'ad 2'
-  * group: 'first-group'
-  * template_body: 'my ad number 2'
-  * url_pattern: '/test/[\w_-]+/'
+{{{
+name: 'ad 2'
+group: 'first-group'
+template_body: 'my ad number 2'
+url_pattern: '/test/[\w_-]+/'
+}}}
 
 == Ad 3 ==
 
-  * name: 'ad 3'
-  * group: 'second-group'
-  * template_body: 'my ad number 3'
-  * url_pattern: ''
+{{{
+name: 'ad 3'
+group: 'second-group'
+template_body: 'my ad number 3'
+url_pattern: ''
+}}}
 
 = Template =
 
