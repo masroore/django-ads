@@ -1,0 +1,95 @@
+format 37
+
+activitynodecanvas 130443 activitynode_ref 128267 // initial
+  xyz 76 13 2000
+activityactioncanvas 130827 activityaction_ref 129419 // activity action Click on "Become an Advertiser"
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 398 74 2000 120 56
+end
+activityactioncanvas 131339 activityaction_ref 129547 // activity action Fill form with advertiser details
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 573 73 2000 115 58
+end
+activitynodecanvas 131595 activitynode_ref 128651 // decision
+  xyz 74 80 2000
+activityactioncanvas 131723 activityaction_ref 129931 // activity action create new account
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 38 182 2000 100 60
+end
+activitynodecanvas 132107 activitynode_ref 128779 // decision
+  xyz 232 80 2000
+activityactioncanvas 132363 activityaction_ref 130059 // activity action Login and authenticate
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 196 181 2000 100 60
+end
+activitynodecanvas 132875 activitynode_ref 128907 // decision
+  xyz 618 182 2000
+activityactioncanvas 133003 activityaction_ref 130187 // activity action create new ad
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 582 281 2000 100 60
+end
+activitynodecanvas 133515 activitynode_ref 129035 // activity_final
+  xyz 731 187 2000
+flowcanvas 131467 flow_ref 129547 // <flow>
+  
+  from ref 130827 z 1999 to ref 131339
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 131851 flow_ref 130059 // <flow>
+  
+  from ref 130443 z 1999 to ref 131595
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 131979 flow_ref 130187 // has no account
+  
+  from ref 131595 z 1999 label "has no account" xyz 43 139 3000 to ref 131723
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 132235 flow_ref 130315 // has an account
+  
+  from ref 131595 z 1999 label "has an account" xyz 120 76 3000 to ref 132107
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 132491 flow_ref 130443 // <flow>
+  
+  from ref 131723 z 1999 to ref 132363
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 132619 flow_ref 130571 // is not authenticated
+  
+  from ref 132107 z 1999 label "is not authenticated" xyz 191 139 3000 to ref 132363
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 132747 flow_ref 130699 // is authenticated
+  
+  from ref 132107 z 1999 label "is authenticated" xyz 279 79 3000 to ref 130827
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 133131 flow_ref 130827 // <flow>
+  
+  from ref 131339 z 1999 to ref 132875
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 133259 flow_ref 130955 // want to create a new ad
+  
+  from ref 132875 z 1999 label "want to create a new ad" xyz 565 240 3000 to ref 133003
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 133643 flow_ref 131083 // <flow>
+  
+  from ref 132875 z 1999 to ref 133515
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 133771 flow_ref 131211 // <flow>
+  geometry HV
+  
+  from ref 133003 z 1999 to point 741 308
+  line 134027 z 1999 to ref 133515
+  show_infonote default drawing_language default write_horizontally default
+end
+end

@@ -1,0 +1,32 @@
+format 37
+
+activitynodecanvas 128011 activitynode_ref 128395 // initial
+  xyz 77 16 2000
+activityactioncanvas 128523 activityaction_ref 129675 // activity action Click on "New Account"
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 36 76 2000 100 60
+end
+activityactioncanvas 128651 activityaction_ref 129803 // activity action Fill form with account details
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 212 77 2000 110 60
+end
+activitynodecanvas 128779 activitynode_ref 128523 // activity_final
+  xyz 254 173 2000
+flowcanvas 128907 flow_ref 129675 // <flow>
+  
+  from ref 128011 z 1999 to ref 128523
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 129035 flow_ref 129803 // <flow>
+  
+  from ref 128523 z 1999 to ref 128651
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 129163 flow_ref 129931 // <flow>
+  
+  from ref 128651 z 1999 to ref 128779
+  show_infonote default drawing_language default write_horizontally default
+end
+end

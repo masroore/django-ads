@@ -1,0 +1,84 @@
+format 37
+
+activitynodecanvas 128011 activitynode_ref 128011 // initial
+  xyz 62 17 2000
+activitynodecanvas 128047 activitynode_ref 130607 // decision
+  xyz 692 176 2000
+activityactioncanvas 128267 activityaction_ref 128139 // activity action Click on "New Account"
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 22 67 2005 100 60
+end
+activityactioncanvas 128431 activityaction_ref 131887 // activity action create a new ad box
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 520 265 2000 100 60
+end
+activityactioncanvas 128523 activityaction_ref 128267 // activity action Fill form with details
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 185 67 2000 100 60
+end
+activityactioncanvas 128779 activityaction_ref 128395 // activity action Click on "New Website"
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 343 67 2000 100 60
+end
+activityactioncanvas 129035 activityaction_ref 128523 // activity action Fill form with website details
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 504 66 2000 100 60
+end
+activityactioncanvas 129291 activityaction_ref 128651 // activity action Receive a new ID
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 655 67 2000 100 60
+end
+activitynodecanvas 130315 activitynode_ref 128139 // activity_final
+  xyz 417 183 2000
+flowcanvas 128175 flow_ref 134063 // <flow>
+  
+  from ref 129291 z 1999 to ref 128047
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128303 flow_ref 134191 // Does not want to create a new AdBox
+  
+  from ref 128047 z 1999 label "Does not want to create a new AdBox" xyz 469 175 3000 to ref 130315
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128395 flow_ref 128011 // <flow>
+  
+  from ref 128011 z 1999 to ref 128267
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128559 flow_ref 134319 // <flow>
+  
+  from ref 128047 z 1999 to ref 128431
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128651 flow_ref 128139 // <flow>
+  
+  from ref 128267 z 1999 to ref 128523
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128687 flow_ref 134447 // <flow>
+  
+  from ref 128431 z 1999 to ref 130315
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128907 flow_ref 128267 // <flow>
+  
+  from ref 128523 z 1999 to ref 128779
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 129163 flow_ref 128395 // <flow>
+  
+  from ref 128779 z 1999 to ref 129035
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 129419 flow_ref 128523 // <flow>
+  
+  from ref 129035 z 1999 to ref 129291
+  show_infonote default drawing_language default write_horizontally default
+end
+end

@@ -2,7 +2,6 @@ import re
 
 from django import template
 from django.shortcuts import render_to_response
-from django.template import resolve_variable
 from django.template.defaultfilters import slugify
 
 from apps.ads.models import Ad
@@ -64,7 +63,7 @@ class AdGroupRender(template.Node):
 
         if ads.count() == 1 and not ads[0].url_pattern:
             template_body = ads[0].template_body
-        elif ads.count():
+        elif ads.count() and 'request' in context:
             url = context['request'].get_full_path()
 
             for ad in ads.filter(url_pattern__isnull=False):

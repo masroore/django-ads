@@ -1,0 +1,46 @@
+format 37
+
+activitynodecanvas 128011 activitynode_ref 129163 // initial
+  xyz 72 17 2000
+activityactioncanvas 128139 activityaction_ref 130315 // activity action Fill form with Ad details
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 33 80 2000 100 60
+end
+activitynodecanvas 128395 activitynode_ref 129291 // decision
+  xyz 216 91 2000
+activitynodecanvas 128523 activitynode_ref 129419 // activity_final
+  xyz 411 98 2000
+activityactioncanvas 128907 activityaction_ref 130443 // activity action getting credits for this ad
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 180 195 2000 100 60
+end
+flowcanvas 128047 flow_ref 134575 // <flow>
+  geometry HV
+  
+  from ref 128907 z 1999 to point 421 222
+  line 128303 z 1999 to ref 128523
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128267 flow_ref 131339 // <flow>
+  
+  from ref 128011 z 1999 to ref 128139
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128651 flow_ref 131467 // <flow>
+  
+  from ref 128139 z 1999 to ref 128395
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128779 flow_ref 131595 // does not want to get credits
+  
+  from ref 128395 z 1999 label "does not want to get credits" xyz 246 88 1999 to ref 128523
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 129035 flow_ref 131723 // wants to get credits
+  
+  from ref 128395 z 1999 label "wants to get credits" xyz 232 151 1999 to ref 128907
+  show_infonote default drawing_language default write_horizontally default
+end
+end

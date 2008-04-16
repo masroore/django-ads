@@ -1,0 +1,137 @@
+format 37
+
+classinstance 128090 class_ref 128090 // EndUser
+  name "" xyz 19 4 2000 life_line_z 2000
+classinstance 128858 class_ref 128858 // WebBrowserSession
+  name "" xyz 163 4 2000 life_line_z 2000
+classinstance 128986 class_ref 128730 // WebsiteServerSession
+  name "" xyz 419 5 2000 life_line_z 2000
+classinstance 129114 class_ref 128602 // WNServerSession
+  name "" xyz 682 4 2000 life_line_z 2000
+note 133082 "- Log with date and URL
+- Increment count
+- Decrement credit"
+  xyzwh 819 321 2000 164 81
+note 133466 "JS take all words (max 50) with 3 up to 20 characters distincts, featuring H1 and TITLE elements"
+  xyzwh 59 103 2000 117 163
+note 133722 "- URL
+- Website ID
+- Collected words
+- Quantity of Ads"
+  xyzwh 557 72 2000 128 102
+durationcanvas 129242 classinstance_ref 128090 // :EndUser
+  xyzwh 41 51 2010 11 40
+durationcanvas 129370 classinstance_ref 128858 // :WebBrowserSession
+  xyzwh 221 51 2010 11 92
+durationcanvas 129626 classinstance_ref 128986 // :WebsiteServerSession
+  xyzwh 482 88 2010 11 50
+durationcanvas 130266 classinstance_ref 129114 // :WNServerSession
+  xyzwh 733 190 2010 11 158
+durationcanvas 130778 classinstance_ref 128858 // :WebBrowserSession
+  xyzwh 221 322 2010 11 25
+durationcanvas 131034 classinstance_ref 128858 // :WebBrowserSession
+  xyzwh 221 164 2010 11 75
+durationcanvas 131290 classinstance_ref 128090 // :EndUser
+  xyzwh 41 370 2010 11 26
+durationcanvas 131418 classinstance_ref 128858 // :WebBrowserSession
+  xyzwh 221 370 2010 11 49
+durationcanvas 131802 classinstance_ref 129114 // :WNServerSession
+  xyzwh 733 402 2010 11 95
+durationcanvas 132186 classinstance_ref 128858 // :WebBrowserSession
+  xyzwh 221 469 2010 11 76
+durationcanvas 132826 classinstance_ref 128090 // :EndUser
+  xyzwh 41 534 2010 11 25
+msg 129498 asynchronous
+  from durationcanvas_ref 129242 // 128090
+  to durationcanvas_ref 129370 // 128858
+  yz 67 2000 explicitmsg "Browse a URL"
+  show_full_operations_definition default drawing_language default
+  label_xy 97 48
+msg 129754 asynchronous
+  from durationcanvas_ref 129370 // 128858
+  to durationcanvas_ref 129626 // 128986
+  yz 90 2000 explicitmsg "Requests and loads page URL"
+  show_full_operations_definition default drawing_language default
+  label_xy 262 71
+reflexivemsg 130138 asynchronous
+  to durationcanvas_ref 131034 // 128858
+  yz 179 2000 explicitmsg "JS parses for important words in body"
+  show_full_operations_definition default drawing_language default
+  label_xy 261 173
+msg 130394 asynchronous
+  from durationcanvas_ref 131034 // 128858
+  to durationcanvas_ref 130266 // 129114
+  yz 217 2000 explicitmsg "Request ads"
+  show_full_operations_definition default drawing_language default
+  label_xy 448 198
+reflexivemsg 130522 asynchronous
+  to durationcanvas_ref 130266 // 129114
+  yz 247 2000 explicitmsg "Get ads by words according to rules"
+  show_full_operations_definition default drawing_language default
+  args "Rules are:
+- enabled
+- next view
+- limited by credits
+- all words"
+  label_xy 534 246
+msg 130650 return
+  from durationcanvas_ref 129626 // 128986
+  to durationcanvas_ref 129370 // 128858
+  yz 127 2000 explicitmsg "HTML with Website ID and
+Quantity of Ads for each published Ad"
+  show_full_operations_definition default drawing_language default
+  label_xy 256 111
+msg 130906 return
+  from durationcanvas_ref 130266 // 129114
+  to durationcanvas_ref 130778 // 128858
+  yz 329 2000 explicitmsg "Ads"
+  show_full_operations_definition default drawing_language default
+  label_xy 472 310
+reflexivemsg 131162 asynchronous
+  to durationcanvas_ref 130266 // 129114
+  yz 285 2000 explicitmsg "Stores view (log, count and credits)"
+  show_full_operations_definition default drawing_language default
+  label_xy 538 280
+msg 131546 asynchronous
+  from durationcanvas_ref 131290 // 128090
+  to durationcanvas_ref 131418 // 128858
+  yz 377 2000 explicitmsg "Clicks on some of Ads"
+  show_full_operations_definition default drawing_language default
+  label_xy 76 358
+msg 131930 asynchronous
+  from durationcanvas_ref 131418 // 128858
+  to durationcanvas_ref 131802 // 129114
+  yz 402 2000 explicitmsg "Sends click and requests for  destination URL"
+  show_full_operations_definition default drawing_language default
+  label_xy 359 383
+reflexivemsg 132058 asynchronous
+  to durationcanvas_ref 131802 // 129114
+  yz 430 2000 explicitmsg "Stores click (log, count and credits)"
+  show_full_operations_definition default drawing_language default
+  label_xy 539 423
+msg 132314 return
+  from durationcanvas_ref 131802 // 129114
+  to durationcanvas_ref 132186 // 128858
+  yz 469 2000 explicitmsg "Returns destination URL"
+  show_full_operations_definition default drawing_language default
+  label_xy 415 450
+reflexivemsg 132442 asynchronous
+  to durationcanvas_ref 132186 // 128858
+  yz 499 2000 explicitmsg "Loads destination URL"
+  show_full_operations_definition default drawing_language default
+  label_xy 255 493
+msg 132954 return
+  from durationcanvas_ref 132186 // 128858
+  to durationcanvas_ref 132826 // 128090
+  yz 534 2000 explicitmsg "Shows new Advertiser's URL"
+  show_full_operations_definition default drawing_language default
+  label_xy 58 515
+line 133210 -_-_
+  from ref 133082 z 1999 to ref 131162
+line 133338 -_-_
+  from ref 133082 z 1999 to ref 132058
+line 133594 -_-_
+  from ref 133466 z 1999 to ref 130138
+line 133850 -_-_
+  from ref 133722 z 1999 to ref 130394
+end

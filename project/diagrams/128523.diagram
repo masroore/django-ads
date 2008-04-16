@@ -1,0 +1,50 @@
+format 37
+
+activitynodecanvas 128011 activitynode_ref 129547 // initial
+  xyz 87 22 2000
+activityactioncanvas 128267 activityaction_ref 130571 // activity action Choose how much wanna pay
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 40 156 2000 115 55
+end
+note 128523 "A calculation is shown with total of credits it will get with this value"
+  xyzwh 20 255 2000 157 86
+activityactioncanvas 128779 activityaction_ref 130699 // activity action Pay using our "Paypal-like" system
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 254 147 2000 117 74
+end
+activityactioncanvas 129291 activityaction_ref 130827 // activity action Shows a list with pending credits waiting for payment confirmation
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 461 140 2000 159 85
+end
+activitynodecanvas 129675 activitynode_ref 129803 // activity_final
+  xyz 528 279 2000
+note 130827 "Credit is not confirmed yet, so, Ad still has no these credits"
+  xyzwh 447 24 2000 188 60
+flowcanvas 128395 flow_ref 131851 // <flow>
+  
+  from ref 128011 z 1999 to ref 128267
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128907 flow_ref 131979 // <flow>
+  
+  from ref 128267 z 1999 to ref 128779
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 129419 flow_ref 132107 // <flow>
+  
+  from ref 128779 z 1999 to ref 129291
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 131083 flow_ref 132747 // <flow>
+  
+  from ref 129291 z 1999 to ref 129675
+  show_infonote default drawing_language default write_horizontally default
+end
+line 128651 -_-_
+  from ref 128267 z 1999 to ref 128523
+line 130955 -_-_
+  from ref 129291 z 1999 to ref 130827
+end

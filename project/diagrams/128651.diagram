@@ -1,0 +1,42 @@
+format 37
+
+activitynodecanvas 128011 activitynode_ref 130059 // initial
+  xyz 84 18 2000
+activityactioncanvas 128139 activityaction_ref 130955 // activity action Credit is updated with confirmation date and confirmed flag setted as True
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 26 89 2000 133 104
+end
+activityactioncanvas 128395 activityaction_ref 131083 // activity action Ad is enabled
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 255 110 2000 100 60
+end
+activityactioncanvas 128651 activityaction_ref 131211 // activity action Sends message/e-mail to Advertiser about credit confirmation
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 444 99 2000 153 81
+end
+activitynodecanvas 128907 activitynode_ref 130187 // activity_final
+  xyz 507 233 2000
+flowcanvas 128267 flow_ref 132875 // <flow>
+  
+  from ref 128011 z 1999 to ref 128139
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128523 flow_ref 133003 // <flow>
+  
+  from ref 128139 z 1999 to ref 128395
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128779 flow_ref 133131 // <flow>
+  
+  from ref 128395 z 1999 to ref 128651
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 129035 flow_ref 133259 // <flow>
+  
+  from ref 128651 z 1999 to ref 128907
+  show_infonote default drawing_language default write_horizontally default
+end
+end

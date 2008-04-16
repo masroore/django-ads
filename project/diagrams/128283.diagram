@@ -1,0 +1,12 @@
+format 37
+
+componentcanvas 128027 component_ref 128027 // WNAds
+  draw_component_as_icon default show_component_req_prov default show_component_rea default
+  xyzwh 57 39 2000 165 65
+componentcanvas 128155 component_ref 128155 // Website
+  draw_component_as_icon default show_component_req_prov default show_component_rea default
+  xyzwh 350 38 2000 165 65
+componentcanvas 128283 component_ref 128283 // WebBrowser
+  draw_component_as_icon default show_component_req_prov default show_component_rea default
+  xyzwh 635 38 2000 165 65
+end
