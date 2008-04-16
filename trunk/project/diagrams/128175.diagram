@@ -1,0 +1,52 @@
+format 37
+
+activitynodecanvas 128047 activitynode_ref 130351 // initial
+  xyz 69 15 2000
+activityactioncanvas 128175 activityaction_ref 131375 // activity action Click on "create a new ad box"
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 22 75 2000 113 59
+end
+activityactioncanvas 128431 activityaction_ref 131503 // activity action User choose one of available Ad models
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 214 75 2000 134 60
+end
+activityactioncanvas 128687 activityaction_ref 131631 // activity action Get the HTML/JS script for this AdBox
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 415 76 2000 100 60
+end
+activityactioncanvas 128943 activityaction_ref 131759 // activity action Put HTML/JS code in its website code
+  show_infonote default drawing_language default
+  show_opaque_action_definition default
+  xyzwh 579 77 2000 126 60
+end
+activitynodecanvas 129199 activitynode_ref 130479 // activity_final
+  xyz 628 179 2000
+flowcanvas 128303 flow_ref 133423 // <flow>
+  
+  from ref 128047 z 1999 to ref 128175
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128559 flow_ref 133551 // <flow>
+  
+  from ref 128175 z 1999 to ref 128431
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 128815 flow_ref 133679 // <flow>
+  
+  from ref 128431 z 1999 to ref 128687
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 129071 flow_ref 133807 // <flow>
+  
+  from ref 128687 z 1999 to ref 128943
+  show_infonote default drawing_language default write_horizontally default
+end
+flowcanvas 129327 flow_ref 133935 // <flow>
+  
+  from ref 128943 z 1999 to ref 129199
+  show_infonote default drawing_language default write_horizontally default
+end
+end
