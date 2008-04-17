@@ -15,10 +15,9 @@ note 133082 "- Log with date and URL
 note 133466 "JS take all words (max 50) with 3 up to 20 characters distincts, featuring H1 and TITLE elements"
   xyzwh 59 103 2000 117 163
 note 133722 "- URL
-- Website ID
-- Collected words
-- Quantity of Ads"
-  xyzwh 557 72 2000 128 102
+- AdBox ID
+- Collected words"
+  xyzwh 551 99 2000 128 76
 durationcanvas 129242 classinstance_ref 128090 // :EndUser
   xyzwh 41 51 2010 11 40
 durationcanvas 129370 classinstance_ref 128858 // :WebBrowserSession

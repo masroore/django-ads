@@ -23,5 +23,11 @@
     </div>
 </div>
 
+<div class="box silver clear_both">
+    <h4>{% trans "Copy this HTML code and paste in your website" %}</h4>
+
+    <textarea class="code_to_copy" readonly="readonly">{{ adbox.generate_code }}</textarea>
+</div>
+
 {% endblock body %}
 

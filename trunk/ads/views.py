@@ -166,3 +166,17 @@ def adbox_home(request, website_id, adbox_id):
             context_instance=RequestContext(request),
             )
 
+@login_required
+def adbox_get_ads(request, website_id, adbox_id):
+    website = get_object_or_404(Website, id=website_id)
+    adbox = get_object_or_404(AdBox, id=adbox_id)
+
+    ret = render_to_response(
+            'ads/adbox_get_ads.js',
+            locals(),
+            context_instance=RequestContext(request),
+            )
+    ret.mimetype = "text/javascript"
+
+    return ret
+

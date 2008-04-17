@@ -13,6 +13,7 @@ urlpatterns = patterns('apps.ads.views',
     (r'^website/(?P<website_id>\d+)/$', 'website_home'),
     (r'^website/(?P<website_id>\d+)/create_adbox/$', 'adbox_create'),
     (r'^website/(?P<website_id>\d+)/adbox/(?P<adbox_id>\d+)/$', 'adbox_home'),
+    (r'^website/(?P<website_id>\d+)/adbox/(?P<adbox_id>\d+)/get_ads/$', 'adbox_get_ads'),
 )
 
 
