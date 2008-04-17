@@ -1,0 +1,27 @@
+{% extends "ads/base.html" %}
+
+{% load i18n %}
+
+{% block title %}Django Advertising System :: {% trans "AdBox Home" %}{% endblock %}
+
+{% block h1 %}{% trans "AdBox Home" %}{% endblock %}
+
+{% block body %}
+
+<div class="clear_both">
+    <div class="box olive panel">
+        <table class="form">
+            <tr>
+                <th>{% trans "Website" %}</th>
+                <td>{{ website }}</td>
+            </tr>
+            <tr>
+                <th>{% trans "AdBox Code" %}</th>
+                <td>{{ adbox.id }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+{% endblock body %}
+

@@ -117,7 +117,7 @@ class AdModel(models.Model):
     since = models.DateTimeField(blank=True, default=datetime.now)
 
     def __unicode__(self):
-        return "%dx%d" %(self.width, self.height)
+        return "%dx%d" %(self.height, self.width)
 
 class AdBox(models.Model):
     website = models.ForeignKey('Website', related_name='ad_boxes')
@@ -126,6 +126,9 @@ class AdBox(models.Model):
 
     def __unicode__(self):
         return unicode(self.ad_model)
+
+    def get_absolute_url(self):
+        return '%sadbox/%d/' %( self.website.get_absolute_url(), self.id )
 
     class Meta:
         ordering = ('since',)
@@ -152,7 +155,7 @@ class URL(models.Model):
         ordering = ('url',)
 
 class Ad(models.Model):
-    advertiser = models.ForeignKey('Advertiser', related_name='users')
+    advertiser = models.ForeignKey('Advertiser', related_name='ads')
     words = models.ManyToManyField('Word', null=True, blank=True)
     title = models.CharField(max_length=40)
     url = models.URLField(verify_exists=False)
@@ -168,6 +171,9 @@ class Ad(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return '%sad/%d/' %( self.advertiser.get_absolute_url(), self.id )
 
     class Meta:
         ordering = ('title',)
@@ -189,10 +195,10 @@ class Log(models.Model):
 from django.db.models import signals
 from django.dispatch import dispatcher
 
-# Ad
-def ad_pre_save(sender, instance, signal, *args, **kwargs):
+# Show
+def show_pre_save(sender, instance, signal, *args, **kwargs):
     instance.slug = slugify(instance.name)
     instance.group = slugify(instance.group)
 
-dispatcher.connect(ad_pre_save, signal=signals.pre_save, sender=Ad)
+dispatcher.connect(show_pre_save, signal=signals.pre_save, sender=Show)
 

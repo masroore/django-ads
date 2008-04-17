@@ -1,0 +1,25 @@
+{% extends "ads/base.html" %}
+
+{% load i18n %}
+
+{% block title %}Django Advertising System :: {% trans "AdBox Creation/Edition" %}{% endblock %}
+
+{% block h1 %}{% trans "AdBox Creation/Edition" %}{% endblock %}
+
+{% block body %}
+
+<div class="box orange">
+    <form method="post" action="{{ website.get_absolute_url }}create_adbox/">
+        <table class="form">
+            {{ form_adbox }}
+
+            <tr>
+                <th>&nbsp;</th>
+                <td><input type="submit" value="{% trans "Save" %}"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+{% endblock body %}
+

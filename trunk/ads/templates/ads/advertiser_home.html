@@ -9,7 +9,7 @@
 {% block body %}
 
 <div class="clear_both">
-    <div class="box orange">
+    <div class="box olive panel">
         <table class="form">
             <tr>
                 <th>{% trans "Name" %}</th>
@@ -17,6 +17,24 @@
             </tr>
         </table>
     </div>
+
+    <div class="box orange">
+        <a href="create_ad/">{% trans "Create a new Ad" %}</a>
+    </div>
+</div>
+
+<div class="box silver clear_both">
+    <h2>{% trans "Ads" %}</h2>
+
+    {% if advertiser.ads.count %}
+    <ul>
+        {% for ad in advertiser.ads.all %}
+        <li><a href="{{ ad.get_absolute_url }}">{{ ad }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    {% trans "This advertiser has no ads!" %}
+    {% endif %}
 </div>
 
 {% endblock body %}
