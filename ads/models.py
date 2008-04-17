@@ -4,6 +4,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
+from django.conf import settings
 
 USER_TYPES = (
     ('o', _('Owner')),
@@ -129,6 +130,12 @@ class AdBox(models.Model):
 
     def get_absolute_url(self):
         return '%sadbox/%d/' %( self.website.get_absolute_url(), self.id )
+
+    def generate_code(self):
+        return """<script>adbox = %(id)d;</script>\n<script src="%(url)s/media/ads/ads_client.js"></script>""" %{
+                'url': settings.PROJECT_ROOT_URL,
+                'id': self.id
+                }
 
     class Meta:
         ordering = ('since',)
