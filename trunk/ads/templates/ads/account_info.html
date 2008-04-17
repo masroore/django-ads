@@ -1,0 +1,15 @@
+{% load i18n %}
+
+<div class="box olive">
+    <table class="form">
+        <tr>
+            <th>{% trans "Username" %}</th>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <th>{% trans "E-mail" %}</th>
+            <td>{{ user.email }}</td>
+        </tr>
+    </table>
+</div>
+

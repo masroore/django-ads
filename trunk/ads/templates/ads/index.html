@@ -1,0 +1,56 @@
+{% extends "ads/base.html" %}
+
+{% load i18n %}
+
+{% block title %}Django Advertising System{% endblock %}
+
+{% block h1 %}Django Advertising System{% endblock %}
+
+{% block body %}
+
+{% if user.is_authenticated %}
+<div class="clear_both">
+    {% include "ads/account_info.html" %}
+
+    <div class="box orange al_center">
+        <a href="create_advertiser/">{% trans "Become an Advertiser" %}</a>
+    </div>
+
+    <div class="box blue al_center">
+        <a href="create_website/">{% trans "Become a Website" %}</a>
+    </div>
+</div>
+
+<div class="box silver clear_both">
+    <h2>{% trans "Advertiser accounts" %}</h2>
+
+    {% if user.advertiser_users.count %}
+    <ul>
+        {% for aduser in user.advertiser_users.all %}
+        <li><a href="{{ aduser.advertiser.get_absolute_url }}">{{ aduser.advertiser }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    {% trans "You have no advertiser accounts!" %}
+    {% endif %}
+</div>
+
+<div class="box silver clear_both">
+    <h2>{% trans "Website accounts" %}</h2>
+
+    {% if user.website_users.count %}
+    <ul>
+        {% for webuser in user.website_users.all %}
+        <li><a href="{{ webuser.website.get_absolute_url }}">{{ webuser.website }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    {% trans "You have no advertiser accounts!" %}
+    {% endif %}
+</div>
+{% else %}
+    {% include "ads/create_account_form.html" %}
+{% endif %}
+
+{% endblock body %}
+

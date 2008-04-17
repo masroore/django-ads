@@ -1,0 +1,14 @@
+{% extends "ads/base.html" %}
+
+{% load i18n %}
+
+{% block title %}Django Advertising System :: {% trans "Account Creation" %}{% endblock %}
+
+{% block h1 %}{% trans "Account Creation" %}{% endblock %}
+
+{% block body %}
+
+{% include "ads/create_account_form.html" %}
+
+{% endblock body %}
+

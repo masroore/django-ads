@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        {% block meta %}{% endblock %}
+        {% block style %}
+        <link rel="stylesheet" href="/media/ads/ads.css"/>
+        {% endblock %}
+        {% block scripts %}
+        <script src="/media/ads/ads.js"></script>
+        {% endblock %}
+    </head>
+    <body>
+        <h1>{% block h1 %}{% endblock %}</h1>
+
+        {% if messages %}
+        <ul class="box yellow messages clear_both">
+            {% for msg in messages %}
+            <li>{{ msg }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <div class="all">
+            {% block body %}
+            {% endblock body %}
+        </div>
+    </body>
+</html>

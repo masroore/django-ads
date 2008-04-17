@@ -2,113 +2,113 @@ format 37
 
 classcanvas 128027 class_ref 128027 // Show
   draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
-  xyz 94 20 2000
+  xyz 94 -1 2000
   end
 classcanvas 128047 class_ref 128175 // AdModel
   draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
-  xyz 689 55 2000
+  xyz 697 87 2000
   end
 classcanvas 128155 class_ref 128155 // Ad
   draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
-  xyz 236 141 2000
+  xyz 241 196 2000
   end
 classcanvas 128175 class_ref 128303 // AdBox
   draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
-  xyz 674 188 2000
+  xyz 682 220 2000
   end
 classcanvas 128283 class_ref 128283 // Advertiser
   draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
-  xyz 58 193 2000
+  xyz 66 215 2000
   end
 classcanvas 128411 class_ref 128411 // Word
   draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
-  xyz 262 506 2000
+  xyz 270 538 2000
   end
 classcanvas 128539 class_ref 128539 // URL
   draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
-  xyz 429 266 2000
+  xyz 437 298 2000
   end
 classcanvas 128667 class_ref 128667 // Website
   draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
-  xyz 387 90 2000
+  xyz 395 122 2000
   end
 classcanvas 128795 class_ref 128795 // Log
   draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
-  xyz 443 401 2000
+  xyz 451 433 2000
   end
 classcanvas 128923 class_ref 128923 // AdCredit
   draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
-  xyz 58 387 2000
+  xyz 66 419 2000
   end
 classcanvas 129179 class_ref 129179 // AdvertiserUser
   draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
-  xyz 61 292 2000
+  xyz 69 324 2000
   end
 classcanvas 129307 class_ref 129307 // WebsiteUser
   draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
-  xyz 520 19 2000
+  xyz 528 51 2000
   end
 note 135067 "This is the old Ad model class"
-  xyzwh 231 24 2000 119 62
+  xyzwh 239 56 2000 119 62
 note 135451 "Does not stores HTTP arguments"
-  xyzwh 545 307 2000 144 61
+  xyzwh 553 339 2000 144 61
 relationcanvas 128431 relation_ref 128303 // <aggregation>
   geometry HVH
-  from ref 128667 z 1999 to point 557 138
-  line 129071 z 1999 to point 557 207
+  from ref 128667 z 1999 to point 565 170
+  line 129071 z 1999 to point 565 239
   line 129199 z 1999 to ref 128175
-  role_a_pos 609 184 3000 no_role_b
+  role_a_pos 617 216 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 relationcanvas 129327 relation_ref 128431 // <unidirectional association>
   from ref 128539 z 1999 to ref 128667
-  role_a_pos 439 199 3000 no_role_b
-  multiplicity_a_pos 399 199 3000 no_multiplicity_b
+  role_a_pos 447 231 3000 no_role_b
+  multiplicity_a_pos 407 231 3000 no_multiplicity_b
 relationcanvas 129455 relation_ref 128559 // <unidirectional association>
   geometry HV
-  from ref 128795 z 1999 to point 697 438
+  from ref 128795 z 1999 to point 705 470
   line 129583 z 1999 to ref 128175
-  role_a_pos 709 239 3000 no_role_b
-  multiplicity_a_pos 669 239 3000 no_multiplicity_b
+  role_a_pos 717 271 3000 no_role_b
+  multiplicity_a_pos 677 271 3000 no_multiplicity_b
 relationcanvas 129563 relation_ref 128155 // <aggregation by value>
   geometry VH
-  from ref 128667 z 1999 to point 414 56
+  from ref 128667 z 1999 to point 422 88
   line 128559 z 1999 to ref 129307
-  role_a_pos 479 33 3000 no_role_b
+  role_a_pos 487 65 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 relationcanvas 129691 relation_ref 128283 // <aggregation by value>
   geometry HV
-  from ref 128283 z 1999 to point 109 220
+  from ref 128283 z 1999 to point 117 252
   line 131227 z 1999 to ref 129179
-  role_a_pos 121 266 3000 no_role_b
+  role_a_pos 129 298 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 relationcanvas 129711 relation_ref 128687 // <unidirectional association>
   from ref 128795 z 1999 to ref 128539
-  role_a_pos 463 333 3000 no_role_b
+  role_a_pos 471 365 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 relationcanvas 129839 relation_ref 128815 // <unidirectional association>
   from ref 128155 z 1999 to ref 128411
-  role_a_pos 293 480 3000 no_role_b
-  multiplicity_a_pos 255 480 3000 no_multiplicity_b
+  role_a_pos 301 512 3000 no_role_b
+  multiplicity_a_pos 263 512 3000 no_multiplicity_b
 relationcanvas 129947 relation_ref 128539 // <aggregation>
   geometry HV
-  from ref 128283 z 1999 to point 278 220
+  from ref 128283 z 1999 to point 287 252
   line 131739 z 1999 to ref 128155
-  role_a_pos 176 200 3000 no_role_b
+  role_a_pos 259 229 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 relationcanvas 129967 relation_ref 128943 // <unidirectional association>
   from ref 128175 z 1999 to ref 128047
-  role_a_pos 720 142 3000 no_role_b
+  role_a_pos 728 174 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 relationcanvas 130203 relation_ref 128795 // <aggregation>
   geometry HVH unfixed
-  from ref 128155 z 1999 to point 200 294
-  line 133019 z 1999 to point 200 445
+  from ref 128155 z 1999 to point 208 328
+  line 133019 z 1999 to point 208 477
   line 133147 z 1999 to ref 128923
-  role_a_pos 148 422 3000 no_role_b
+  role_a_pos 156 454 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 relationcanvas 130459 relation_ref 129051 // <aggregation>
   from ref 128155 z 1999 to ref 128795
-  role_a_pos 371 404 3000 no_role_b
+  role_a_pos 379 435 3000 no_role_b
   no_multiplicity_a no_multiplicity_b
 line 135195 -_-_
   from ref 135067 z 1999 to ref 128027
