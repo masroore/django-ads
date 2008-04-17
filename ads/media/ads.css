@@ -1,6 +1,6 @@
 /* Basic */
 body {
-    margin: 2em;
+    margin: 30px;
     font-family: arial, trebuchet ms, helvetica;
     font-size: 12pt;
 }
@@ -40,8 +40,7 @@ h1, h2, h3, h4 {
 
 .box {
     padding: 0.7em;
-    margin-right: 1em;
-    margin-bottom: 1em;
+    margin: 0.5em 0.5em 1em 0.5em;
     float: left;
 }
 
@@ -83,4 +82,8 @@ ul.messages li {
 .clear_both {
     float: none;
     clear: both;
+}
+
+.panel {
+    float: right;
 }
