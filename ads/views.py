@@ -1,9 +1,13 @@
+import simplejson, re
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
+from django.contrib.djangoplus.shortcuts import render_to_json
+from django.conf import settings
 
 from forms import FormAccount, FormAdvertiser, FormWebsite, FormAd, FormAdBox
 from models import Website, Advertiser, Ad, AdBox
@@ -131,6 +135,15 @@ def ad_home(request, advertiser_id, ad_id):
             context_instance=RequestContext(request),
             )
 
+def ad_hit(request, advertiser_id, ad_id):
+    try:
+        #advertiser = get_object_or_404(Advertiser, id=advertiser_id)
+        ad = Ad.objects.get(id=ad_id)
+
+        return HttpResponseRedirect(ad.url)
+    except:
+        return HttpResponseRedirect(settings.PROJECT_ROOT_URL)
+
 @login_required
 def adbox_create(request, website_id):
     website = get_object_or_404(Website, id=website_id)
@@ -166,17 +179,27 @@ def adbox_home(request, website_id, adbox_id):
             context_instance=RequestContext(request),
             )
 
-@login_required
 def adbox_get_ads(request, website_id, adbox_id):
     website = get_object_or_404(Website, id=website_id)
     adbox = get_object_or_404(AdBox, id=adbox_id)
 
-    ret = render_to_response(
-            'ads/adbox_get_ads.js',
-            locals(),
-            context_instance=RequestContext(request),
-            )
-    ret.mimetype = "text/javascript"
+    ret = {
+        'ads': [],
+        'css': adbox.ad_model.get_css_url(),
+    }
 
-    return ret
+    ads = Ad.objects.filter(enabled=True) #.filter(view_credits__gt=0).filter(click_credits__gt=0)
+
+    for ad in ads:
+        m = re.match('(http://|)([^/\?]*)', ad.url, re.I | re.M)
+        ad_url = m and m.group(2) or ''
+
+        ret['ads'].append({
+            'title': ad.title,
+            'description': ad.description,
+            'url': '%s%shit/' %( settings.PROJECT_ROOT_URL[:-1], ad.get_absolute_url() ),
+            'ad_url': ad_url,
+        })
+
+    return render_to_json(simplejson.dumps(ret))
 
