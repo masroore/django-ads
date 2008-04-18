@@ -9,6 +9,7 @@ urlpatterns = patterns('apps.ads.views',
     (r'^advertiser/(?P<advertiser_id>\d+)/$', 'advertiser_home'),
     (r'^advertiser/(?P<advertiser_id>\d+)/create_ad/$', 'ad_create'),
     (r'^advertiser/(?P<advertiser_id>\d+)/ad/(?P<ad_id>\d+)/$', 'ad_home'),
+    (r'^advertiser/(?P<advertiser_id>\d+)/ad/(?P<ad_id>\d+)/hit/$', 'ad_hit'),
     
     (r'^website/(?P<website_id>\d+)/$', 'website_home'),
     (r'^website/(?P<website_id>\d+)/create_adbox/$', 'adbox_create'),

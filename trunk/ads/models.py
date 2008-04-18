@@ -116,6 +116,7 @@ class AdModel(models.Model):
     height = models.SmallIntegerField()
     width = models.SmallIntegerField()
     since = models.DateTimeField(blank=True, default=datetime.now)
+    css = models.FileField(upload_to=settings.ADS_UPLOAD_CSS_PATH)
 
     def __unicode__(self):
         return "%dx%d" %(self.height, self.width)
@@ -132,9 +133,10 @@ class AdBox(models.Model):
         return '%sadbox/%d/' %( self.website.get_absolute_url(), self.id )
 
     def generate_code(self):
-        return """<script>adbox = %(id)d;</script>\n<script src="%(url)s/media/ads/ads_client.js"></script>""" %{
+        return """<div id="adbox_%(id)d"/><script type="text/javascript">cont_id='adbox_%(id)d';website_id=%(w_id)d;adbox_id=%(id)d;</script>\n<script type="text/javascript" src="%(url)s/media/ads/ads_client.js"></script>""" %{
                 'url': settings.PROJECT_ROOT_URL[:-1],
-                'id': self.id
+                'id': self.id,
+                'w_id': self.website.id,
                 }
 
     class Meta:

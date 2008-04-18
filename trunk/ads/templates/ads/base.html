@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <html>
     <head>
         <title>{% block title %}{% endblock %}</title>
@@ -6,6 +8,7 @@
         <link rel="stylesheet" href="/media/ads/ads.css"/>
         {% endblock %}
         {% block scripts %}
+        <script src="/media/ads/jquery.js"></script>
         <script src="/media/ads/ads.js"></script>
         {% endblock %}
     </head>
@@ -23,6 +26,13 @@
         <div class="all">
             {% block body %}
             {% endblock body %}
+
+            <div class="box silver clear_both" style="text-align:center">
+                <h2>{% trans "Ads demonstration" %}</h2>
+
+                <div id="adbox_1"/><script type="text/javascript">cont_id='adbox_1';website_id=1;adbox_id=1;</script>
+                <script type="text/javascript" src="http://localhost:8000/media/ads/ads_client.js"></script>
+            </div>
         </div>
     </body>
 </html>

@@ -1,0 +1,51 @@
+div.ads_ad {
+    background-color: white;
+    padding: 2;
+    font-size: 9pt;
+    text-align: justify;
+}
+
+div.ads_ad .ads_conteiner {
+    clear: both;
+}
+
+div.ads_ad .ads_conteiner .ads_ad {
+    float: left;
+    margin: 2;
+    overflow: hidden;
+}
+
+div.ads_ad .ads_conteiner .ads_ad h6 {
+    margin: 0 0 2 0;
+    font-size: 1.2em;
+    overflow: hidden;
+}
+
+div.ads_ad .ads_conteiner .ads_ad .ads_description {
+    display: block;
+    overflow: hidden;
+}
+
+div.ads_ad .ads_conteiner .ads_ad .ads_url {
+    margin: 2 0 0 0;
+    color: green;
+    display: block;
+    overflow: hidden;
+}
+
+div.ads_ad .ads_footer {
+    color: gray;
+    clear: both;
+    text-align: right;
+    font-size: 0.8em;
+}
+
+div.ads_ad a {
+    text-decoration: none;
+    font-weight: normal;
+}
+
+div.ads_ad a:hover {
+    text-decoration: underline;
+}
+
