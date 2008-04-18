@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 
 from django.db import models
@@ -133,10 +134,12 @@ class AdBox(models.Model):
         return '%sadbox/%d/' %( self.website.get_absolute_url(), self.id )
 
     def generate_code(self):
-        return """<div id="adbox_%(id)d"/><script type="text/javascript">cont_id='adbox_%(id)d';website_id=%(w_id)d;adbox_id=%(id)d;</script>\n<script type="text/javascript" src="%(url)s/media/ads/ads_client.js"></script>""" %{
+        return """<div id="adbox_%(id)d"/>\n<script type="text/javascript">cont_id='adbox_%(id)d';website_id=%(w_id)d;adbox_id=%(id)d;adbox_height=%(h)d;adbox_width=%(w)d</script>\n<script type="text/javascript" src="%(url)s/media/ads/ads_client.js"></script>""" %{
                 'url': settings.PROJECT_ROOT_URL[:-1],
                 'id': self.id,
                 'w_id': self.website.id,
+                'h': self.ad_model.height,
+                'w': self.ad_model.width,
                 }
 
     class Meta:
@@ -183,6 +186,13 @@ class Ad(models.Model):
 
     def get_absolute_url(self):
         return '%sad/%d/' %( self.advertiser.get_absolute_url(), self.id )
+
+    def get_hit_url(self):
+        return '%s%shit/' %( settings.PROJECT_ROOT_URL[:-1], self.get_absolute_url() )
+
+    def get_short_url(self):
+        m = re.match('(http://|)([^/\?]*)', self.url, re.I | re.M)
+        return m and m.group(2) or ''
 
     class Meta:
         ordering = ('title',)

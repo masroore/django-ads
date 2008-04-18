@@ -190,16 +190,9 @@ def adbox_get_ads(request, website_id, adbox_id):
 
     ads = Ad.objects.filter(enabled=True) #.filter(view_credits__gt=0).filter(click_credits__gt=0)
 
-    for ad in ads:
-        m = re.match('(http://|)([^/\?]*)', ad.url, re.I | re.M)
-        ad_url = m and m.group(2) or ''
-
-        ret['ads'].append({
-            'title': ad.title,
-            'description': ad.description,
-            'url': '%s%shit/' %( settings.PROJECT_ROOT_URL[:-1], ad.get_absolute_url() ),
-            'ad_url': ad_url,
-        })
-
-    return render_to_json(simplejson.dumps(ret))
+    return render_to_response(
+            'ads/adbox_ads.html',
+            locals(),
+            context_instance=RequestContext(request),
+            )
 
