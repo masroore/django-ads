@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
 from django.contrib.djangoplus.shortcuts import render_to_json
 from django.conf import settings
+from django.template.defaultfilters import slugify
 
 from forms import FormAccount, FormAdvertiser, FormWebsite, FormAd, FormAdBox
 from models import Website, Advertiser, Ad, AdBox
@@ -183,12 +184,19 @@ def adbox_get_ads(request, website_id, adbox_id):
     website = get_object_or_404(Website, id=website_id)
     adbox = get_object_or_404(AdBox, id=adbox_id)
 
+    words = [slugify(w) for w in request.GET.get('words', '').split(',') if w]
+
     ret = {
         'ads': [],
         'css': adbox.ad_model.get_css_url(),
     }
 
-    ads = Ad.objects.filter(enabled=True) #.filter(view_credits__gt=0).filter(click_credits__gt=0)
+    ads = Ad.objects.filter(
+            enabled=True,           # only enabled Ads
+            words__slug__in=words,  # only with request words
+            )
+    #.filter(view_credits__gt=0).filter(click_credits__gt=0)
+    ads = ads.distinct()
 
     return render_to_response(
             'ads/adbox_ads.html',

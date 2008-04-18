@@ -6,6 +6,10 @@
 
 {% block h1 %}Django Advertising System{% endblock %}
 
+{% block meta %}{{ block.super }}
+<meta name="keywords" content="brazil england china russia india japan">
+{% endblock meta %}
+
 {% block body %}
 
 {% if user.is_authenticated %}
