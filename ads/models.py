@@ -119,7 +119,7 @@ class AdModel(models.Model):
     css = models.FileField(upload_to=settings.ADS_UPLOAD_CSS_PATH)
 
     def __unicode__(self):
-        return "%dx%d" %(self.height, self.width)
+        return "%dx%d" %(self.width, self.height)
 
 class AdBox(models.Model):
     website = models.ForeignKey('Website', related_name='ad_boxes')
