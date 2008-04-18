@@ -133,7 +133,7 @@ class AdBox(models.Model):
 
     def generate_code(self):
         return """<script>adbox = %(id)d;</script>\n<script src="%(url)s/media/ads/ads_client.js"></script>""" %{
-                'url': settings.PROJECT_ROOT_URL,
+                'url': settings.PROJECT_ROOT_URL[:-1],
                 'id': self.id
                 }
 
