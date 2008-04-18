@@ -1,0 +1,26 @@
+{% load i18n %}
+
+<html>
+    <head>
+        {% block meta %}{% endblock %}
+        {% block style %}
+        <link rel="stylesheet" href="{{ settings.ADS_MEDIA_URL }}ads_client.css"/>
+        <link rel="stylesheet" href="{{ adbox.ad_model.get_css_url }}"/>
+        {% endblock %}
+    </head>
+    <body>
+        <div class="ads_conteiner">
+            {% for ad in ads %}
+            <div class="ads_ad">
+                <a href="{{ ad.get_hit_url }}" target="_parent">
+                    <h6>{{ ad.title }}</h6>
+                    <span class="ads_description">{{ ad.description }}</span>
+                    <span class="ads_url">{{ ad.get_short_url }}</span>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="ads_footer">Ads by {{ settings.ADS_SYSTEM_MARK }}</div>
+    </body>
+</html>
+
