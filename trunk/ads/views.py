@@ -216,6 +216,8 @@ def adbox_get_ads(request, website_id, adbox_id):
                 ).exclude(
                     id__in=[ad.id for ad in ads]
                     ).distinct()
+    else:
+        extra_ads = []
 
     # Evite duplicated ads and limited by quantity
     ads = [a for a in ads] + [a for a in extra_ads]
