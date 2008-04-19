@@ -118,6 +118,7 @@ class AdModel(models.Model):
     width = models.SmallIntegerField()
     since = models.DateTimeField(blank=True, default=datetime.now)
     css = models.FileField(upload_to=settings.ADS_UPLOAD_CSS_PATH)
+    ads_quantity = models.SmallIntegerField()
 
     def __unicode__(self):
         return "%dx%d" %(self.width, self.height)
@@ -125,6 +126,7 @@ class AdModel(models.Model):
 class AdBox(models.Model):
     website = models.ForeignKey('Website', related_name='ad_boxes')
     ad_model = models.ForeignKey('AdModel', related_name='ad_boxes')
+    styleset = models.ForeignKey('StyleSet', related_name='ad_boxes', null=True, blank=True)
     since = models.DateTimeField(blank=True, default=datetime.now)
 
     def __unicode__(self):
@@ -194,6 +196,42 @@ class Ad(models.Model):
         m = re.match('(http://|)([^/\?]*)', self.url, re.I | re.M)
         return m and m.group(2) or ''
 
+    def __store_hit(self, url, type):
+        # Get URL from database
+        website_url, new = URL.objects.get_or_create(url=url)
+
+        # Returns the log created
+        return Log.objects.create(
+                ad=self,
+                type=type,
+                url=url,
+                website_url=website_url,
+                )
+
+    def hit_view(self, url):
+        # Increment count
+        self.view_count = self.view_count + 1
+        
+        # Decrement credits
+        self.view_credits = self.view_credits - 1
+
+        # Save the Ad (self)
+        self.save()
+
+        return self.__store_hit(url, 'v')
+
+    def hit_click(self, url):
+        # Increment count
+        self.click_count = self.click_count + 1
+        
+        # Decrement credits
+        self.click_credits = self.click_credits - 1
+
+        # Save the Ad (self)
+        self.save()
+
+        return self.__store_hit(url, 'c')
+
     class Meta:
         ordering = ('title',)
 
@@ -208,7 +246,18 @@ class Log(models.Model):
         return self.date
 
     class Meta:
-        ordering = ('date',)
+        ordering = ('-date',)
+
+class StyleSet(models.Model):
+    name = models.CharField(max_length=20)
+    since = models.DateTimeField(blank=True, default=datetime.now)
+    css = models.FileField(upload_to=settings.ADS_UPLOAD_CSS_PATH, null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('name',)
 
 # SIGNALS AND LISTENERS
 from django.db.models import signals

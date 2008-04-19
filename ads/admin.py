@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.admin.options import ModelAdmin
 
 from models import Show, Advertiser, AdvertiserUser, Website, WebsiteUser, \
-        AdModel, AdBox, Word, URL, Ad, Log
+        AdModel, AdBox, Word, URL, Ad, Log, StyleSet
 
 class ShowAdmin(ModelAdmin):
     list_display = ('group','name','slug','url_pattern',)
@@ -42,6 +42,9 @@ class AdAdmin(ModelAdmin):
 class LogAdmin(ModelAdmin):
     pass
 
+class StyleSetAdmin(ModelAdmin):
+    pass
+
 admin.site.register(Show, ShowAdmin)
 admin.site.register(Advertiser, AdvertiserAdmin)
 admin.site.register(AdvertiserUser, AdvertiserUserAdmin)
@@ -53,4 +56,5 @@ admin.site.register(Word, WordAdmin)
 admin.site.register(URL, URLAdmin)
 admin.site.register(Ad, AdAdmin)
 admin.site.register(Log, LogAdmin)
+admin.site.register(StyleSet, StyleSetAdmin)
 

@@ -73,5 +73,5 @@ class FormAd(forms.ModelForm):
 class FormAdBox(forms.ModelForm):
     class Meta:
         model = AdBox
-        fields = ('ad_model',)
+        fields = ('ad_model','styleset',)
 
