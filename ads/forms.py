@@ -68,7 +68,8 @@ class FormAd(forms.ModelForm):
 
     class Meta:
         model = Ad
-        fields = ('title','description','url','all_words','enabled')
+        fields = ('title','description','url','all_words','enabled',
+                'click_limit_per_day',)
 
 class FormAdBox(forms.ModelForm):
     class Meta:

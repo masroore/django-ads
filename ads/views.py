@@ -1,4 +1,5 @@
 import simplejson, re
+from datetime import datetime, timedelta
 
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -191,15 +192,34 @@ def adbox_get_ads(request, website_id, adbox_id):
     # Get 'words' argument with relevant words in the page body
     words = [slugify(w) for w in request.GET.get('words', '').split(',') if w]
 
+    tomorrow = datetime.today() + timedelta(days=1)
+
     # Filters enabled and by words
     ads = Ad.objects.filter(
             enabled=True,           # only enabled Ads
             words__slug__in=words,  # only with request words
+            next_view__lt='%04d-%02d-%02d 00:00:00'%(tomorrow.year, tomorrow.month, tomorrow.day), # only when next view is before than tomorrow
             )
     #.filter(view_credits__gt=0).filter(click_credits__gt=0)
 
+    # Orders by next view
+    ads = ads.order_by('next_view')
+
     # Evite duplicated ads and limited by quantity
     ads = ads.distinct()[:adbox.ad_model.ads_quantity]
+
+    # If limit was not reached, complement with "all words" ads
+    if ads.count() < adbox.ad_model.ads_quantity:
+        extra_ads = Ad.objects.filter(
+                enabled=True,       # only enabled Ads
+                all_words=True,     # only with request words
+                ).exclude(
+                    id__in=[ad.id for ad in ads]
+                    ).distinct()
+
+    # Evite duplicated ads and limited by quantity
+    ads = [a for a in ads] + [a for a in extra_ads]
+    ads = ads[:adbox.ad_model.ads_quantity]
 
     # Stores the view hit in each of selected ads
     for ad in ads: ad.hit_view(referer)
