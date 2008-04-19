@@ -37,9 +37,7 @@ durationcanvas 131418 classinstance_ref 128858 // :WebBrowserSession
 durationcanvas 131802 classinstance_ref 129114 // :WNServerSession
   xyzwh 733 402 2010 11 95
 durationcanvas 132186 classinstance_ref 128858 // :WebBrowserSession
-  xyzwh 221 469 2010 11 76
-durationcanvas 132826 classinstance_ref 128090 // :EndUser
-  xyzwh 41 534 2010 11 25
+  xyzwh 221 469 2010 11 53
 msg 129498 asynchronous
   from durationcanvas_ref 129242 // 128090
   to durationcanvas_ref 129370 // 128858
@@ -100,7 +98,7 @@ msg 131546 asynchronous
 msg 131930 asynchronous
   from durationcanvas_ref 131418 // 128858
   to durationcanvas_ref 131802 // 129114
-  yz 402 2000 explicitmsg "Sends click and requests for  destination URL"
+  yz 402 2000 explicitmsg "Load Ads Server URL with Ad Id and URL"
   show_full_operations_definition default drawing_language default
   label_xy 359 383
 reflexivemsg 132058 asynchronous
@@ -111,7 +109,7 @@ reflexivemsg 132058 asynchronous
 msg 132314 return
   from durationcanvas_ref 131802 // 129114
   to durationcanvas_ref 132186 // 128858
-  yz 469 2000 explicitmsg "Returns destination URL"
+  yz 469 2000 explicitmsg "Returns HTTP header redirecting to Ad URL"
   show_full_operations_definition default drawing_language default
   label_xy 415 450
 reflexivemsg 132442 asynchronous
@@ -119,12 +117,6 @@ reflexivemsg 132442 asynchronous
   yz 499 2000 explicitmsg "Loads destination URL"
   show_full_operations_definition default drawing_language default
   label_xy 255 493
-msg 132954 return
-  from durationcanvas_ref 132186 // 128858
-  to durationcanvas_ref 132826 // 128090
-  yz 534 2000 explicitmsg "Shows new Advertiser's URL"
-  show_full_operations_definition default drawing_language default
-  label_xy 58 515
 line 133210 -_-_
   from ref 133082 z 1999 to ref 131162
 line 133338 -_-_

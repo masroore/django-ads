@@ -9,6 +9,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.djangoplus.shortcuts import render_to_json
 from django.conf import settings
 from django.template.defaultfilters import slugify
+from django.views.decorators.cache import never_cache
 
 from forms import FormAccount, FormAdvertiser, FormWebsite, FormAd, FormAdBox
 from models import Website, Advertiser, Ad, AdBox
@@ -84,7 +85,6 @@ def website_create(request):
             context_instance=RequestContext(request),
             )
 
-@login_required
 def advertiser_home(request, advertiser_id):
     advertiser = get_object_or_404(Advertiser, id=advertiser_id)
 
@@ -94,7 +94,6 @@ def advertiser_home(request, advertiser_id):
             context_instance=RequestContext(request),
             )
 
-@login_required
 def website_home(request, website_id):
     website = get_object_or_404(Website, id=website_id)
 
@@ -125,7 +124,6 @@ def ad_create(request, advertiser_id):
             context_instance=RequestContext(request),
             )
 
-@login_required
 def ad_home(request, advertiser_id, ad_id):
     advertiser = get_object_or_404(Advertiser, id=advertiser_id)
     ad = get_object_or_404(Ad, id=ad_id)
@@ -136,13 +134,15 @@ def ad_home(request, advertiser_id, ad_id):
             context_instance=RequestContext(request),
             )
 
+@never_cache
 def ad_hit(request, advertiser_id, ad_id):
     try:
         #advertiser = get_object_or_404(Advertiser, id=advertiser_id)
         ad = Ad.objects.get(id=ad_id)
+        ad.hit_click(request.GET['referer'])
 
         return HttpResponseRedirect(ad.url)
-    except:
+    except Ad.DoesNotExist, e:
         return HttpResponseRedirect(settings.PROJECT_ROOT_URL)
 
 @login_required
@@ -169,7 +169,6 @@ def adbox_create(request, website_id):
             context_instance=RequestContext(request),
             )
 
-@login_required
 def adbox_home(request, website_id, adbox_id):
     website = get_object_or_404(Website, id=website_id)
     adbox = get_object_or_404(AdBox, id=adbox_id)
@@ -180,23 +179,30 @@ def adbox_home(request, website_id, adbox_id):
             context_instance=RequestContext(request),
             )
 
+@never_cache
 def adbox_get_ads(request, website_id, adbox_id):
-    website = get_object_or_404(Website, id=website_id)
+    """View function that returs the ads html for be shown in the iframe"""
+    #website = get_object_or_404(Website, id=website_id)
     adbox = get_object_or_404(AdBox, id=adbox_id)
 
+    # Get referer to use as origin URL when user clicks
+    referer = request.GET.get('referer', '')
+
+    # Get 'words' argument with relevant words in the page body
     words = [slugify(w) for w in request.GET.get('words', '').split(',') if w]
 
-    ret = {
-        'ads': [],
-        'css': adbox.ad_model.get_css_url(),
-    }
-
+    # Filters enabled and by words
     ads = Ad.objects.filter(
             enabled=True,           # only enabled Ads
             words__slug__in=words,  # only with request words
             )
     #.filter(view_credits__gt=0).filter(click_credits__gt=0)
-    ads = ads.distinct()
+
+    # Evite duplicated ads and limited by quantity
+    ads = ads.distinct()[:adbox.ad_model.ads_quantity]
+
+    # Stores the view hit in each of selected ads
+    for ad in ads: ad.hit_view(referer)
 
     return render_to_response(
             'ads/adbox_ads.html',

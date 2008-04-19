@@ -23,5 +23,28 @@
     </div>
 </div>
 
+{% if ad.log_entries.count %}
+<div class="box silver clear_both" style="text-align:center">
+    <h2>{% trans "Latest 10 log entries" %}</h2>
+
+    {% trans "Total" %}: {{ ad.log_entries.count }}
+
+    <table width="100%">
+        <tr>
+            <th>{% trans "When" %}</th>
+            <th>{% trans "URL" %}</th>
+            <th>{% trans "Type" %}</th>
+        </tr>
+        {% for log in ad.log_entries.all|slice:":10" %}
+        <tr>
+            <td>{{ log.date|timesince }}</td>
+            <td>{{ log.url }}</td>
+            <td>{{ log.get_type_display }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endif %}
+
 {% endblock body %}
 

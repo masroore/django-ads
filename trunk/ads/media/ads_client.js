@@ -5,6 +5,11 @@
 // Continues only if adbox variable is valid
 if (cont_id != undefined && website_id != undefined && adbox_id != undefined) {
     var ADS_SERVER_URL = 'http://localhost:8000/';
+
+    //-----------------------
+    // DOES NOT CHANGE BELOW
+    //-----------------------
+
     var ADS_SERVER_GET_ADS_URL = ADS_SERVER_URL+'ads/website/'+website_id+'/adbox/'+adbox_id+'/get_ads/';
     var MAX_WORDS = 100;
     var INVALID_WORDS = ['this','the']
@@ -39,8 +44,15 @@ if (cont_id != undefined && website_id != undefined && adbox_id != undefined) {
 
     var collected_words = collected_words.length <= MAX_WORDS ? collected_words : collected_words.slice(0,MAX_WORDS);
 
+    // Referer URL
+    var ref = window.location.href;
+
+    // Remove arguments
+    if (ref.indexOf('?')) ref = ref.split('?')[0]
+    if (ref.indexOf('#')) ref = ref.split('#')[0]
+
     // Generate iframe with its properties
-    $('#'+cont_id).before('<iframe id="'+cont_id+'_f" src="'+ADS_SERVER_GET_ADS_URL+'?words='+collected_words+'"/>');
+    $('#'+cont_id).before('<iframe id="'+cont_id+'_f" src="'+ADS_SERVER_GET_ADS_URL+'?referer='+ref+'&words='+collected_words+'"/>');
     $('#'+cont_id).remove();
 
     $('#'+cont_id+'_f').css('height', adbox_height+'px');
