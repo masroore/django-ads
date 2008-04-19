@@ -1,5 +1,5 @@
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.db import models
 from django.template.defaultfilters import slugify
@@ -182,6 +182,8 @@ class Ad(models.Model):
     enabled = models.BooleanField(blank=True, default=False)
     all_words = models.BooleanField(blank=True, default=False)
     next_view = models.DateTimeField(null=True, blank=True)
+    last_view = models.DateTimeField(null=True, blank=True)
+    click_limit_per_day = models.IntegerField(blank=True, default=0)
 
     def __unicode__(self):
         return self.title
@@ -216,6 +218,7 @@ class Ad(models.Model):
         self.view_credits = self.view_credits - 1
 
         # Save the Ad (self)
+        self.last_view = datetime.now()
         self.save()
 
         return self.__store_hit(url, 'v')
@@ -226,6 +229,25 @@ class Ad(models.Model):
         
         # Decrement credits
         self.click_credits = self.click_credits - 1
+
+        # Calculating next view
+        now = datetime.now()
+        tomorrow = now.today() + timedelta(days=1)
+        self.click_limit_per_day = self.click_limit_per_day or 1
+        clicks_today = Log.objects.filter(ad=self, type='c', date=now.today())
+        delta_click = timedelta(seconds=86400 / self.click_limit_per_day) # Click each seconds number
+
+        # Next view is tomorrow if limit was reached
+        if clicks_today >= self.click_limit_per_day:
+            self.next_view = datetime.today() + timedelta(days=1)
+
+        # Next view is last moment of today if sum of delta is tomorrow
+        elif now + delta_click > tomorrow:
+            self.next_view = tomorrow - timedelta(seconds=1)
+
+        # Next view is now + delta else
+        else:
+            self.next_view = now + delta_click
 
         # Save the Ad (self)
         self.save()
