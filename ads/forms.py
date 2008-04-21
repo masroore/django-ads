@@ -2,32 +2,13 @@ from django import newforms as forms
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from django.contrib.auth.forms import AuthenticationForm
 
 from models import Advertiser, Website, Ad, Word, AdBox
 
-class FormAccount(forms.Form):
+class FormLogin(forms.Form):
     username = forms.CharField(max_length=30)
-    email = forms.EmailField()
     password = forms.CharField(max_length=30, widget=forms.PasswordInput)
-    confirm = forms.CharField(max_length=30, widget=forms.PasswordInput)
-    
-    def clean_username(self):
-        if User.objects.filter(username=self.cleaned_data['username']).count():
-            raise forms.ValidationError(_('Username already exists!'))
-
-        return self.cleaned_data['username']
-    
-    def clean_email(self):
-        if User.objects.filter(email=self.cleaned_data['email']).count():
-            raise forms.ValidationError(_('E-mail already exists!'))
-
-        return self.cleaned_data['email']
-    
-    def clean_confirm(self):
-        if self.cleaned_data['password'] != self.cleaned_data['confirm']:
-            raise forms.ValidationError(_('Confirm password correctly!'))
-
-        return self.cleaned_data['confirm']
 
 class FormAdvertiser(forms.ModelForm):
     class Meta:
@@ -40,12 +21,15 @@ class FormWebsite(forms.ModelForm):
         exclude = ('since',)
 
 class FormAd(forms.ModelForm):
-    words = forms.CharField(max_length=100)
+    words = forms.CharField(max_length=100, widget=forms.Textarea)
 
     def __init__(self, *args, **kwargs):
         self.base_fields['description'].widget = forms.Textarea()
 
         super(FormAd, self).__init__(*args, **kwargs)
+
+        if self.instance:
+            self.initial['words'] = ' '.join([w.slug for w in self.instance.words.all()])
 
     def save(self, advertiser):
         words = [s.strip() for s in self.cleaned_data['words'].split(' ')]

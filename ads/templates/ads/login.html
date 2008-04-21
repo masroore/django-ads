@@ -1,0 +1,25 @@
+{% extends "ads/base.html" %}
+
+{% load i18n %}
+
+{% block title %}Django Advertising System :: {% trans "Account Creation" %}{% endblock %}
+
+{% block h1 %}{% trans "Account Creation" %}{% endblock %}
+
+{% block body %}
+
+<div class="box olive">
+    <form method="post" action="/ads/login/">
+        <table class="form">
+            {{ form_login }}
+
+            <tr>
+                <th>&nbsp;</th>
+                <td><input type="submit" value="{% trans "Login" %}"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+{% endblock body %}
+

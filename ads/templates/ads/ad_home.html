@@ -9,6 +9,14 @@
 {% block body %}
 
 <div class="clear_both">
+    <div class="box orange al_center">
+        <a href="edit/">{% trans "Edit" %}</a>
+    </div>
+
+    <div class="box blue al_center">
+        <a href="delete/">{% trans "Delete" %}</a>
+    </div>
+
     <div class="box olive panel">
         <table class="form">
             <tr>
@@ -27,7 +35,12 @@
 <div class="box silver clear_both" style="text-align:center">
     <h2>{% trans "Latest 10 log entries" %}</h2>
 
-    {% trans "Total" %}: {{ ad.log_entries.count }}
+    <div class="info">
+        {% trans "Viewed" %}: {{ ad.view_count }},
+        {% trans "Clicked" %}: {{ ad.click_count }},
+        {% trans "Last view" %}: {{ ad.last_view|date:"Y-m-d H:i:s" }},
+        {% trans "Next view" %}: {{ ad.next_view|date:"Y-m-d H:i:s" }}
+    </div>
 
     <table width="100%">
         <tr>
