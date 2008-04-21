@@ -12,6 +12,7 @@ from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.views.decorators.cache import never_cache
 from django.contrib.auth.forms import UserCreationForm
+from django.utils.dates import MONTHS
 
 from forms import FormAdvertiser, FormWebsite, FormAd, FormAdBox, FormLogin
 from models import Website, Advertiser, Ad, AdBox
@@ -163,7 +164,12 @@ def ad_delete(request, advertiser_id, ad_id):
 def ad_home(request, advertiser_id, ad_id):
     advertiser = get_object_or_404(Advertiser, id=advertiser_id)
     ad = get_object_or_404(Ad, id=ad_id)
-    chart = OpenFlashChartObject().render("80%", 200, '%schart_data/'%ad.get_absolute_url(), '/media/ads/')
+    
+    chart_latest30days = OpenFlashChartObject().render("80%", 200, '%scd/latest30days/'%ad.get_absolute_url(), '/media/ads/')
+    chart_days_of_month = OpenFlashChartObject().render("80%", 200, '%scd/days_of_month/'%ad.get_absolute_url(), '/media/ads/')
+    chart_days_of_week = OpenFlashChartObject().render("80%", 200, '%scd/days_of_week/'%ad.get_absolute_url(), '/media/ads/')
+    chart_months = OpenFlashChartObject().render("80%", 200, '%scd/months/'%ad.get_absolute_url(), '/media/ads/')
+    chart_hours = OpenFlashChartObject().render("80%", 200, '%scd/hours/'%ad.get_absolute_url(), '/media/ads/')
 
     return render_to_response(
             'ads/ad_home.html',
@@ -171,7 +177,7 @@ def ad_home(request, advertiser_id, ad_id):
             context_instance=RequestContext(request),
             )
 
-def ad_chart_data(request, advertiser_id, ad_id):
+def ad_chart_data_last30days(request, advertiser_id, ad_id):
     advertiser = get_object_or_404(Advertiser, id=advertiser_id)
     ad = get_object_or_404(Ad, id=ad_id)
 
@@ -189,28 +195,114 @@ def ad_chart_data(request, advertiser_id, ad_id):
             })
         cur_date = cur_date + timedelta(days=1)
 
-    g = OpenFlashChartGraph()
-
-    g.title(_('Views and Clicks'), '{font-size: 20px; color: #333}')
-
     views_data = [d['views'] for d in dates]
     clicks_data = [d['clicks'] for d in dates]
 
-    g.set_data( views_data )
-    g.set_data( clicks_data )
+    g = OpenFlashChartGraph()
 
-    g.line( 2, '0x9933CC', 'Views', 10 )
-    g.line_dot( 3, 5, '0xCC3399', 'Clicks', 10)
-    #g.line_hollow( 2, 4, '0x80a033', 'Bounces', 10 )
+    g.line( 2, '0x9933CC', _('Views'), 10 )
+    g.set_data( views_data )
+
+    g.line_dot( 3, 5, '0xCC3399', _('Clicks'), 10)
+    g.set_data( clicks_data )
     
     g.set_x_labels( [d['date'].day for d in dates] )
     g.set_x_label_style( 10, '0x000000', 0, 2 )
     
     g.set_y_max( max( [d['views'] for d in dates] + [d['clicks'] for d in dates] ) )
     g.y_label_steps( 4 )
-    #g.set_y_legend( 'Open Flash Chart', 12, '#736AFF' )
 
     return HttpResponse(g.render())
+
+def ad_chart_data_bar(dates, labels=[]):
+    views_data = [d['views'] for d in dates]
+    clicks_data = [d['clicks'] for d in dates]
+
+    g = OpenFlashChartGraph()
+
+    g.bar_3d( 75, '#D54C78', _('Views'), 10 )
+    g.set_data(views_data)
+    
+    g.bar_3d( 75, '#3334AD', _('Clicks'), 10 )
+    g.set_data(clicks_data)
+    
+    g.set_x_axis_3d( 12 )
+    g.x_axis_colour = '#909090'
+    g.x_grid_colour = '#ADB5C7'
+    g.y_axis_colour = '#909090'
+    g.y_grid_colour = '#ADB5C7'
+    
+    g.set_x_labels( labels or [d['date'] for d in dates] )
+    g.set_y_max( max( [d['views'] for d in dates] + [d['clicks'] for d in dates] ) )
+    g.y_label_steps( 5 )
+
+    return HttpResponse(g.render())
+
+def ad_chart_data_days_of_month(request, advertiser_id, ad_id):
+    advertiser = get_object_or_404(Advertiser, id=advertiser_id)
+    ad = get_object_or_404(Ad, id=ad_id)
+
+    dates = []
+    for day in range(1,32):
+        log_entries = ad.log_entries.filter(date__day=day)
+        dates.append({
+            'date': day,
+            'views': log_entries.filter(type='v').count(),
+            'clicks': log_entries.filter(type='c').count(),
+            })
+
+    return ad_chart_data_bar(dates)
+
+def ad_chart_data_days_of_week(request, advertiser_id, ad_id):
+    advertiser = get_object_or_404(Advertiser, id=advertiser_id)
+    ad = get_object_or_404(Ad, id=ad_id)
+
+    dates = []
+    for day in range(7):
+        if settings.DATABASE_ENGINE == 'sqlite3':
+            log_entries = ad.log_entries.extra(where=["strftime('%%w', date) = %s"], params=[str(day)])
+        else:
+            log_entries = ad.log_entries.extra(where=["extract(dow from date) = %s"], params=[str(day)])
+        dates.append({
+            'date': day,
+            'views': log_entries.filter(type='v').count(),
+            'clicks': log_entries.filter(type='c').count(),
+            })
+
+    return ad_chart_data_bar(dates)
+
+def ad_chart_data_months(request, advertiser_id, ad_id):
+    advertiser = get_object_or_404(Advertiser, id=advertiser_id)
+    ad = get_object_or_404(Ad, id=ad_id)
+
+    dates = []
+    for month in range(1,13):
+        log_entries = ad.log_entries.filter(date__month=month)
+        dates.append({
+            'date': month,
+            'views': log_entries.filter(type='v').count(),
+            'clicks': log_entries.filter(type='c').count(),
+            })
+
+    return ad_chart_data_bar(dates)
+
+def ad_chart_data_hours(request, advertiser_id, ad_id):
+    advertiser = get_object_or_404(Advertiser, id=advertiser_id)
+    ad = get_object_or_404(Ad, id=ad_id)
+
+    dates = []
+    for hour in range(24):
+        if settings.DATABASE_ENGINE == 'sqlite3':
+            log_entries = ad.log_entries.extra(where=["strftime('%%H', date) = %s"], params=["%02d"%hour])
+        else:
+            log_entries = ad.log_entries.extra(where=["extract(hour from date) = %s"], params=["%02d"%hour])
+        dates.append({
+            'date': hour,
+            'views': log_entries.filter(type='v').count(),
+            'clicks': log_entries.filter(type='c').count(),
+            })
+
+    return ad_chart_data_bar(dates)
 
 @never_cache
 def ad_hit(request, advertiser_id, ad_id):
