@@ -20,8 +20,12 @@
     <div class="box olive panel">
         <table class="form">
             <tr>
+                <th>{% trans "Ad Title" %}</th>
+                <td>{{ ad.title }}</td>
+            </tr>
+            <tr>
                 <th>{% trans "Advertiser" %}</th>
-                <td>{{ advertiser }}</td>
+                <td><a href="{{ advertiser.get_absolute_url }}">{{ advertiser }}</a></td>
             </tr>
             <tr>
                 <th>{% trans "Ad Code" %}</th>
@@ -43,6 +47,14 @@
 </div>
 
 {% if ad.log_entries.count %}
+<div class="box silver clear_both" style="text-align:center">
+    <h2>{% trans "Latest 30 day" %}</h2>
+
+    <div class="chart">
+        {{ chart|safe }}
+    </div>
+</div>
+
 <div class="box silver clear_both" style="text-align:center">
     <h2>{% trans "Latest 10 log entries" %}</h2>
 

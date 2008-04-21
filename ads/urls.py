@@ -14,6 +14,7 @@ urlpatterns = patterns('apps.ads.views',
     (r'^advertiser/(?P<advertiser_id>\d+)/ad/(?P<ad_id>\d+)/edit/$', 'ad_edit'),
     (r'^advertiser/(?P<advertiser_id>\d+)/ad/(?P<ad_id>\d+)/delete/$', 'ad_delete'),
     (r'^advertiser/(?P<advertiser_id>\d+)/ad/(?P<ad_id>\d+)/hit/$', 'ad_hit'),
+    (r'^advertiser/(?P<advertiser_id>\d+)/ad/(?P<ad_id>\d+)/chart_data/$', 'ad_chart_data'),
     
     (r'^website/(?P<website_id>\d+)/$', 'website_home'),
     (r'^website/(?P<website_id>\d+)/create_adbox/$', 'adbox_edit'),
