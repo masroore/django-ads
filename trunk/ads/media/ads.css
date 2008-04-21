@@ -98,3 +98,7 @@ textarea.code_to_copy {
     font-family: courier new;
 }
 
+table.list {
+    width: 100%;
+}
+
