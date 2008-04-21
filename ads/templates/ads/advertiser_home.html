@@ -27,11 +27,28 @@
     <h2>{% trans "Ads" %}</h2>
 
     {% if advertiser.ads.count %}
-    <ul>
+    <table class="list">
+        <tr>
+            <th>{% trans "Title" %}</th>
+            <th>{% trans "All words" %}</th>
+            <th>{% trans "Clicks/day" %}</th>
+            <th>{% trans "Views" %}</th>
+            <th>{% trans "Left today" %}</th>
+            <th>{% trans "Clicks" %}</th>
+            <th>{% trans "Left today" %}</th>
+        </tr>
         {% for ad in advertiser.ads.all %}
-        <li><a href="{{ ad.get_absolute_url }}">{{ ad }}</a></li>
+        <tr>
+            <td><a href="{{ ad.get_absolute_url }}">{{ ad }}</a></td>
+            <td>{{ ad.all_words }}</td>
+            <td>{{ ad.click_limit_per_day }}</td>
+            <td>{{ ad.view_count }}</td>
+            <td>{{ ad.view_credits }}</td>
+            <td>{{ ad.click_count }}</td>
+            <td>{{ ad.click_credits }}</td>
+        </tr>
         {% endfor %}
-    </ul>
+    </table>
     {% else %}
     {% trans "This advertiser has no ads!" %}
     {% endif %}

@@ -232,9 +232,14 @@ class Ad(models.Model):
 
         # Calculating next view
         now = datetime.now()
+
         tomorrow = now.today() + timedelta(days=1)
         self.click_limit_per_day = self.click_limit_per_day or 1
-        clicks_today = Log.objects.filter(ad=self, type='c', date=now.today())
+        clicks_today = Log.objects.filter(
+                ad=self,
+                type='c',
+                date__startswith="%04d-%02d-%02d"%(now.year, now.month, now.day),
+                ).count()
         delta_click = timedelta(seconds=86400 / self.click_limit_per_day) # Click each seconds number
 
         # Next view is tomorrow if limit was reached
