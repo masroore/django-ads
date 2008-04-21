@@ -270,7 +270,7 @@ class Log(models.Model):
     website_url = models.ForeignKey('URL', related_name='log_entries', null=True, blank=True)
 
     def __unicode__(self):
-        return self.date
+        return unicode(self.date)
 
     class Meta:
         ordering = ('-date',)
