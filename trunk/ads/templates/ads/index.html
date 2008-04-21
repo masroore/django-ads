@@ -23,6 +23,10 @@
     <div class="box blue al_center">
         <a href="create_website/">{% trans "Become a Website" %}</a>
     </div>
+
+    <div class="box olive al_center">
+        <a href="logout/">{% trans "Logout" %}</a>
+    </div>
 </div>
 
 <div class="box silver clear_both">
@@ -53,7 +57,13 @@
     {% endif %}
 </div>
 {% else %}
-    {% include "ads/create_account_form.html" %}
+    <div class="box orange al_center">
+        <a href="create_account/">{% trans "Create an Account" %}</a>
+    </div>
+
+    <div class="box blue al_center">
+        <a href="login/">{% trans "Login" %}</a>
+    </div>
 {% endif %}
 
 {% endblock body %}
