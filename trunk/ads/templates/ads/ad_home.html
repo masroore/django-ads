@@ -51,7 +51,39 @@
     <h2>{% trans "Latest 30 day" %}</h2>
 
     <div class="chart">
-        {{ chart|safe }}
+        {{ chart_latest30days|safe }}
+    </div>
+</div>
+
+<div class="box silver clear_both" style="text-align:center">
+    <h2>{% trans "Days of month" %}</h2>
+
+    <div class="chart">
+        {{ chart_days_of_month|safe }}
+    </div>
+</div>
+
+<div class="box silver clear_both" style="text-align:center">
+    <h2>{% trans "Days of week" %}</h2>
+
+    <div class="chart">
+        {{ chart_days_of_week|safe }}
+    </div>
+</div>
+
+<div class="box silver clear_both" style="text-align:center">
+    <h2>{% trans "Months" %}</h2>
+
+    <div class="chart">
+        {{ chart_months|safe }}
+    </div>
+</div>
+
+<div class="box silver clear_both" style="text-align:center">
+    <h2>{% trans "Hours" %}</h2>
+
+    <div class="chart">
+        {{ chart_hours|safe }}
     </div>
 </div>
 
