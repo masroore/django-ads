@@ -243,8 +243,13 @@ def adbox_get_ads(request, website_id, adbox_id):
     ads = Ad.objects.filter(
             enabled=True,           # only enabled Ads
             words__slug__in=words,  # only with request words
-            next_view__lt='%04d-%02d-%02d 00:00:00'%(tomorrow.year, tomorrow.month, tomorrow.day), # only when next view is before than tomorrow
-            )
+            ).exclude(
+                all_words=True,
+                )
+
+    # only when next view is before than tomorrow
+    ads = ads.filter(next_view__lt='%04d-%02d-%02d 00:00:00'%(tomorrow.year, tomorrow.month, tomorrow.day)) |\
+          ads.filter(next_view__isnull=True)
     #.filter(view_credits__gt=0).filter(click_credits__gt=0)
 
     # Orders by next view
