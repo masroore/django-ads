@@ -243,7 +243,7 @@ class Ad(models.Model):
         delta_click = timedelta(seconds=86400 / self.click_limit_per_day) # Click each seconds number
 
         # Next view is tomorrow if limit was reached
-        if clicks_today >= self.click_limit_per_day:
+        if clicks_today >= self.click_limit_per_day - 1:
             self.next_view = datetime.today() + timedelta(days=1)
 
         # Next view is last moment of today if sum of delta is tomorrow
