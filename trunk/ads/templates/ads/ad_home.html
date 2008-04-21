@@ -31,16 +31,20 @@
     </div>
 </div>
 
+<div class="box silver clear_both" style="text-align:center">
+    <h2>{% trans "Informations" %}</h2>
+
+    <ul class="info">
+        <li>{% trans "Viewed" %}: {{ ad.view_count }}</li>
+        <li>{% trans "Clicked" %}: {{ ad.click_count }}</li>
+        <li>{% trans "Last view" %}: {{ ad.last_view|date:"Y-m-d H:i:s" }}</li>
+        <li>{% trans "Next view" %}: {{ ad.next_view|date:"Y-m-d H:i:s" }}</li>
+    </ul>
+</div>
+
 {% if ad.log_entries.count %}
 <div class="box silver clear_both" style="text-align:center">
     <h2>{% trans "Latest 10 log entries" %}</h2>
-
-    <div class="info">
-        {% trans "Viewed" %}: {{ ad.view_count }},
-        {% trans "Clicked" %}: {{ ad.click_count }},
-        {% trans "Last view" %}: {{ ad.last_view|date:"Y-m-d H:i:s" }},
-        {% trans "Next view" %}: {{ ad.next_view|date:"Y-m-d H:i:s" }}
-    </div>
 
     <table width="100%">
         <tr>
