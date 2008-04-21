@@ -28,7 +28,7 @@ class FormAd(forms.ModelForm):
 
         super(FormAd, self).__init__(*args, **kwargs)
 
-        if self.instance:
+        if self.instance and self.instance.id:
             self.initial['words'] = ' '.join([w.slug for w in self.instance.words.all()])
 
     def save(self, advertiser):
