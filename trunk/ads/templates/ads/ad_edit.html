@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block title %}Django Advertising System :: {% trans "Ad Creation/Edition" %}{% endblock %}
+{% block title %}{% if ad %}{{ ad.title }}{% else %}{% trans "New ad" %}{% endif %} :: Django Advertising System :: {% trans "Ad Creation/Edition" %}{% endblock %}
 
 {% block h1 %}{% trans "Ad Creation/Edition" %}{% endblock %}
 
