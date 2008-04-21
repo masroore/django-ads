@@ -21,7 +21,7 @@ class FormWebsite(forms.ModelForm):
         exclude = ('since',)
 
 class FormAd(forms.ModelForm):
-    words = forms.CharField(max_length=100, widget=forms.Textarea)
+    words = forms.CharField(max_length=100, widget=forms.Textarea, required=False)
 
     def __init__(self, *args, **kwargs):
         self.base_fields['description'].widget = forms.Textarea()
@@ -36,8 +36,9 @@ class FormAd(forms.ModelForm):
         words_objs = []
 
         for word in words:
-            w, new = Word.objects.get_or_create(slug=slugify(word))
-            words_objs.append(unicode(w.id))
+            if slugify(word):
+                w, new = Word.objects.get_or_create(slug=slugify(word))
+                words_objs.append(w)
 
         ad = super(FormAd, self).save(False)
         ad.advertiser = advertiser
@@ -46,7 +47,9 @@ class FormAd(forms.ModelForm):
         ad.words.clear()
 
         for word in words_objs:
-            ad.words.add(word)
+            if not word in ad.words.all():
+                print word
+                ad.words.add(word)
 
         return ad
 
