@@ -169,6 +169,13 @@ class URL(models.Model):
     class Meta:
         ordering = ('url',)
 
+class AdManager(models.Manager):
+    def with_credits(self):
+        ads = self.get_query_set().filter(enabled=True)
+        ads = ads.filter(limited_by_credits=True).filter(view_credits__gt=0).filter(click_credits__gt=0) |\
+              ads.filter(limited_by_credits=False)
+        return ads.distinct()
+
 class Ad(models.Model):
     advertiser = models.ForeignKey('Advertiser', related_name='ads')
     words = models.ManyToManyField('Word', null=True, blank=True)
@@ -185,6 +192,9 @@ class Ad(models.Model):
     next_view = models.DateTimeField(null=True, blank=True)
     last_view = models.DateTimeField(null=True, blank=True)
     click_limit_per_day = models.IntegerField(blank=True, default=0)
+    limited_by_credits = models.BooleanField(blank=True, default=True)
+
+    objects = AdManager()
 
     def __unicode__(self):
         return self.title

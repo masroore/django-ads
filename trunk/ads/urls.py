@@ -2,11 +2,8 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('apps.ads.views',
     (r'^$', 'index'),
-    (r'^create_account/$', 'create_account'),
     (r'^create_advertiser/$', 'advertiser_create'),
     (r'^create_website/$', 'website_create'),
-    (r'^login/$', 'login'),
-    (r'^logout/$', 'logout'),
 
     (r'^advertiser/(?P<advertiser_id>\d+)/$', 'advertiser_home'),
     (r'^advertiser/(?P<advertiser_id>\d+)/create_ad/$', 'ad_edit'),
