@@ -25,6 +25,7 @@ class Show(models.Model):
     url_pattern = models.CharField(max_length=500, null=True, blank=True)
     enabled = models.BooleanField(blank=True, default=True)
     rotative = models.BooleanField(blank=True, default=False)
+    conditions = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
         return self.name
