@@ -21,6 +21,8 @@ body {
     margin: 0 0 2 0;
     font-size: 1.2em;
     overflow: hidden;
+    height: 20;
+    text-align: left;
 }
 
 .ads_conteiner .ads_ad .ads_description {
