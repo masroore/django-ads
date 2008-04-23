@@ -1,7 +1,7 @@
 format 37
 "ads" // ads
-  revision 11
-  modified_by 2 "marinho"
+  revision 12
+  modified_by 83 "marinho"
   // class settings
   //class diagram settings
   draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
@@ -508,7 +508,7 @@ format 37
       end
     end
 
-    class 128923 "AdCredit"
+    class 128923 "CreditsLog"
       visibility package 
       cpp_decl ""
       java_decl ""
@@ -533,15 +533,15 @@ format 37
 	idl_decl ""
       end
 
-      attribute 128139 "datetime"
+      attribute 128139 "date"
 	protected explicit_type ""
 	cpp_decl ""
 	java_decl ""
 	idl_decl ""
       end
 
-      attribute 128267 "confirmed"
-	protected explicit_type ""
+      attribute 128267 "saved_to_ad"
+	protected explicit_type "bool"
 	cpp_decl ""
 	java_decl ""
 	idl_decl ""

@@ -16,6 +16,7 @@ from django.utils.dates import MONTHS
 from forms import FormAdvertiser, FormWebsite, FormAd, FormAdBox
 from models import Website, Advertiser, Ad, AdBox
 from openflashchart import graph as OpenFlashChartGraph, graph_object as OpenFlashChartObject
+import app_settings
 
 def index(request):
     return render_to_response(
@@ -117,12 +118,15 @@ def ad_delete(request, advertiser_id, ad_id):
 def ad_home(request, advertiser_id, ad_id):
     advertiser = get_object_or_404(Advertiser, id=advertiser_id)
     ad = get_object_or_404(Ad, id=ad_id)
+
+    w = app_settings.ADS_CHARTS_WIDTH
+    h = app_settings.ADS_CHARTS_HEIGHT
     
-    chart_latest30days = OpenFlashChartObject().render("80%", 200, '%scd/latest30days/'%ad.get_absolute_url(), '/media/ads/')
-    chart_days_of_month = OpenFlashChartObject().render("80%", 200, '%scd/days_of_month/'%ad.get_absolute_url(), '/media/ads/')
-    chart_days_of_week = OpenFlashChartObject().render("80%", 200, '%scd/days_of_week/'%ad.get_absolute_url(), '/media/ads/')
-    chart_months = OpenFlashChartObject().render("80%", 200, '%scd/months/'%ad.get_absolute_url(), '/media/ads/')
-    chart_hours = OpenFlashChartObject().render("80%", 200, '%scd/hours/'%ad.get_absolute_url(), '/media/ads/')
+    chart_latest30days = OpenFlashChartObject().render(w, h, '%scd/latest30days/'%ad.get_absolute_url(), '/media/ads/')
+    chart_days_of_month = OpenFlashChartObject().render(w, h, '%scd/days_of_month/'%ad.get_absolute_url(), '/media/ads/')
+    chart_days_of_week = OpenFlashChartObject().render(w, h, '%scd/days_of_week/'%ad.get_absolute_url(), '/media/ads/')
+    chart_months = OpenFlashChartObject().render(w, h, '%scd/months/'%ad.get_absolute_url(), '/media/ads/')
+    chart_hours = OpenFlashChartObject().render(w, h, '%scd/hours/'%ad.get_absolute_url(), '/media/ads/')
 
     return render_to_response(
             'ads/ad_home.html',
