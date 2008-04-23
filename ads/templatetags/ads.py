@@ -3,10 +3,26 @@ import re
 from django import template
 from django.shortcuts import render_to_response
 from django.template.defaultfilters import slugify
+from django.conf import settings
 
-from apps.ads.models import Ad
+from apps.ads.models import Show
+
+ADS_USE_DJANGOPLUS = getattr(settings, 'ADS_USE_DJANGOPLUS', False)
 
 register = template.Library()
+
+def test_conditions(ad, context):
+    if not ad.conditions:
+        return True
+
+    tpl = "{% if "+ad.conditions+" %}1{% endif %}"
+
+    if ADS_USE_DJANGOPLUS:
+        tpl = "{% load djangoplus %}" + tpl
+
+    res = template.Template(tpl).render(context)
+
+    return res == '1'
 
 # ---
 # Template tag {% ad "slug-identifier" %}
@@ -29,7 +45,7 @@ class AdRender(template.Node):
 
     def render(self, context):
         try:
-            ad = Ad.objects.get(slug=self.slug)
+            ad = Show.objects.get(slug=self.slug, enabled=True)
 
             return ad.template_body
         except template.VariableDoesNotExist, e:
@@ -57,17 +73,17 @@ class AdGroupRender(template.Node):
         self.group = group
 
     def render(self, context):
-        ads = Ad.objects.filter(group=self.group).order_by('-url_pattern','id')
+        ads = Show.objects.filter(group=self.group, enabled=True).order_by('-url_pattern','-conditions','id')
 
         template_body = ''
 
-        if ads.count() == 1 and not ads[0].url_pattern:
+        if ads.count() == 1 and not ads[0].url_pattern and test_conditions(ads[0], context):
             template_body = ads[0].template_body
         elif ads.count() and 'request' in context:
             url = context['request'].get_full_path()
 
             for ad in ads.filter(url_pattern__isnull=False):
-                if re.match(ad.url_pattern, url, re.I):
+                if re.match(ad.url_pattern, url, re.I) and test_conditions(ad, context):
                     template_body = ad.template_body
                     break
 
