@@ -2,10 +2,6 @@
 
 {% load i18n %}
 
-{% block title %}Django Advertising System{% endblock %}
-
-{% block h1 %}Django Advertising System{% endblock %}
-
 {% block meta %}{{ block.super }}
 <meta name="keywords" content="brazil england china russia india japan">
 {% endblock meta %}
@@ -14,15 +10,15 @@
 
 {% if user.is_authenticated %}
 <div class="clear_both">
-    {% include "ads/account_info.html" %}
-
     <div class="box orange al_center">
-        <a href="create_advertiser/">{% trans "Become an Advertiser" %}</a>
+        <a href="create_advertiser/">{% trans "Create a new Advertiser" %}</a>
     </div>
 
+    {% if user.is_superuser or perms.ads.add_website %}
     <div class="box blue al_center">
-        <a href="create_website/">{% trans "Become a Website" %}</a>
+        <a href="create_website/">{% trans "Create a new Website" %}</a>
     </div>
+    {% endif %}
 </div>
 
 <div class="box silver clear_both">

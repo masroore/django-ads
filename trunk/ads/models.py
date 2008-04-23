@@ -297,6 +297,19 @@ class StyleSet(models.Model):
     class Meta:
         ordering = ('name',)
 
+class CreditsLog(models.Model):
+    ad = models.ForeignKey('Ad', related_name='credit_log_entries')
+    date = models.DateTimeField(blank=True, default=datetime.now)
+    view_credits = models.IntegerField(blank=True, default=0)
+    click_credits = models.IntegerField(blank=True, default=0)
+    saved_to_ad = models.BooleanField(blank=True, default=False)
+
+    def __unicode__(self):
+        return unicode(self.date)
+
+    class Meta:
+        ordering = ('-date',)
+
 # SIGNALS AND LISTENERS
 from django.db.models import signals
 from django.dispatch import dispatcher
@@ -307,4 +320,16 @@ def show_pre_save(sender, instance, signal, *args, **kwargs):
     instance.group = slugify(instance.group)
 
 dispatcher.connect(show_pre_save, signal=signals.pre_save, sender=Show)
+
+# CreditsLog
+def creditslog_post_save(sender, instance, signal, *args, **kwargs):
+    if not instance.saved_to_ad:
+        instance.ad.view_credits += instance.view_credits
+        instance.ad.click_credits += instance.click_credits
+        instance.ad.save()
+
+        instance.saved_to_ad = True
+        instance.save()
+
+dispatcher.connect(creditslog_post_save, signal=signals.post_save, sender=CreditsLog)
 
