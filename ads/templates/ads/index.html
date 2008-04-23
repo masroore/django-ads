@@ -23,10 +23,6 @@
     <div class="box blue al_center">
         <a href="create_website/">{% trans "Become a Website" %}</a>
     </div>
-
-    <div class="box olive al_center">
-        <a href="logout/">{% trans "Logout" %}</a>
-    </div>
 </div>
 
 <div class="box silver clear_both">
@@ -56,19 +52,12 @@
     {% trans "You have no advertiser accounts!" %}
     {% endif %}
 </div>
+
 {% else %}
-    <div class="box orange al_center">
-        <a href="create_account/">{% trans "Create an Account" %}</a>
-    </div>
 
-    <div class="box blue al_center">
-        <a href="login/">{% trans "Login" %}</a>
-    </div>
+{% trans "You need to be authenticated to have or change advertiser e website accounts" %}
+    
 {% endif %}
-
-    <div class="box olive al_center">
-        <input onclick="$('.silver').toggle()" value="{% trans "Test" %}" type="button"/>
-    </div>
 
 {% endblock body %}
 

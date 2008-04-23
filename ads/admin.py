@@ -37,7 +37,8 @@ class URLAdmin(ModelAdmin):
     pass
 
 class AdAdmin(ModelAdmin):
-    pass
+    list_display = ('title','advertiser','view_credits','click_credits','view_count','click_count','enabled','all_words','limited_by_credits')
+    list_filter = ('enabled','all_words','limited_by_credits')
 
 class LogAdmin(ModelAdmin):
     pass

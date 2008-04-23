@@ -11,10 +11,9 @@ from django.contrib.djangoplus.shortcuts import render_to_json
 from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.views.decorators.cache import never_cache
-from django.contrib.auth.forms import UserCreationForm
 from django.utils.dates import MONTHS
 
-from forms import FormAdvertiser, FormWebsite, FormAd, FormAdBox, FormLogin
+from forms import FormAdvertiser, FormWebsite, FormAd, FormAdBox
 from models import Website, Advertiser, Ad, AdBox
 from openflashchart import graph as OpenFlashChartGraph, graph_object as OpenFlashChartObject
 
@@ -24,52 +23,6 @@ def index(request):
             locals(),
             context_instance=RequestContext(request),
             )
-
-def create_account(request):
-    if request.POST:
-        form_account = UserCreationForm(request.POST)
-
-        if form_account.is_valid():
-            user = form_account.save()
-            if user:
-                user = authenticate(
-                        username=form_account.cleaned_data['username'],
-                        password=form_account.cleaned_data['password1']
-                        )
-                auth_login(request, user)
-                return HttpResponseRedirect('/ads/')
-    else:
-        form_account = UserCreationForm()
-
-    return render_to_response(
-            'ads/create_account.html',
-            locals(),
-            context_instance=RequestContext(request),
-            )
-
-def login(request):
-    if request.POST:
-        form_login = FormLogin(request.POST)
-
-        if form_login.is_valid():
-            user = authenticate(
-                        username=form_login.cleaned_data['username'],
-                        password=form_login.cleaned_data['password']
-                        )
-            auth_login(request, user)
-            return HttpResponseRedirect('/ads/')
-    else:
-        form_login = FormLogin()
-
-    return render_to_response(
-            'ads/login.html',
-            locals(),
-            context_instance=RequestContext(request),
-            )
-
-def logout(request):
-    auth_logout(request)
-    return HttpResponseRedirect('/ads/')
 
 @login_required
 def advertiser_create(request):
@@ -375,8 +328,7 @@ def adbox_get_ads(request, website_id, adbox_id):
     tomorrow = datetime.today() + timedelta(days=1)
 
     # Filters enabled and by words
-    ads = Ad.objects.filter(
-            enabled=True,           # only enabled Ads
+    ads = Ad.objects.with_credits().filter(
             words__slug__in=words,  # only with request words
             ).exclude(
                 all_words=True,
@@ -385,7 +337,6 @@ def adbox_get_ads(request, website_id, adbox_id):
     # only when next view is before than tomorrow
     ads = ads.filter(next_view__lt='%04d-%02d-%02d 00:00:00'%(tomorrow.year, tomorrow.month, tomorrow.day)) |\
           ads.filter(next_view__isnull=True)
-    #.filter(view_credits__gt=0).filter(click_credits__gt=0)
 
     # Orders by next view
     ads = ads.order_by('next_view')
@@ -395,8 +346,7 @@ def adbox_get_ads(request, website_id, adbox_id):
 
     # If limit was not reached, complement with "all words" ads
     if ads.count() < adbox.ad_model.ads_quantity:
-        extra_ads = Ad.objects.filter(
-                enabled=True,       # only enabled Ads
+        extra_ads = Ad.objects.with_credits().filter(
                 all_words=True,     # only with request words
                 ).exclude(
                     id__in=[ad.id for ad in ads]
