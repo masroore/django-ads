@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block title %}Django Advertising System :: {% trans "Website Creation/Edition" %}{% endblock %}
+{% block title %}{{ website }} | {% trans "Website" %} | {{ block.super }}{% endblock %}
 
 {% block h1 %}{% trans "Website Creation/Edition" %}{% endblock %}
 

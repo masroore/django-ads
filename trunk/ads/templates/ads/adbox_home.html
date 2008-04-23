@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block title %}{{ adbox.title }} :: Django Advertising System :: {% trans "AdBox Home" %}{% endblock %}
+{% block title %}{{ adbox.title }} | {% trans "AdBox Home" %} | {{ block.super }}{% endblock %}
 
 {% block h1 %}{% trans "AdBox Home" %}{% endblock %}
 

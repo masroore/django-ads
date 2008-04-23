@@ -2,7 +2,7 @@
 
 {% load i18n %}
 
-{% block title %}{% if adbox %}{{ adbox.title }}{% else %}{% trans "New adbox" %}{% endif %} :: Django Advertising System :: {% trans "AdBox Creation/Edition" %}{% endblock %}
+{% block title %}{% if adbox %}{{ adbox.title }}{% else %}{% trans "New adbox" %}{% endif %} | {% trans "AdBox Creation/Edition" %} | {{ block.super }}{% endblock %}
 
 {% block h1 %}{% trans "AdBox Creation/Edition" %}{% endblock %}
 
