@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
 from django.contrib.djangoplus.shortcuts import render_to_json
@@ -74,11 +74,55 @@ def advertiser_home(request, advertiser_id):
             context_instance=RequestContext(request),
             )
 
+@login_required
+def advertiser_edit(request, advertiser_id):
+    advertiser = get_object_or_404(Advertiser, id=advertiser_id)
+
+    if not advertiser.advertiser_users.filter(type='o', user=request.user).count():
+        raise Http404
+
+    if request.POST:
+        form_advertiser = FormAdvertiser(request.POST, instance=advertiser)
+
+        if form_advertiser.is_valid():
+            if form_advertiser.save():
+                return HttpResponseRedirect(advertiser.get_absolute_url())
+    else:
+        form_advertiser = FormAdvertiser(instance=advertiser)
+
+    return render_to_response(
+            'ads/advertiser_edit.html',
+            locals(),
+            context_instance=RequestContext(request),
+            )
+
 def website_home(request, website_id):
     website = get_object_or_404(Website, id=website_id)
 
     return render_to_response(
             'ads/website_home.html',
+            locals(),
+            context_instance=RequestContext(request),
+            )
+
+@login_required
+def website_edit(request, website_id):
+    website = get_object_or_404(Website, id=website_id)
+
+    if not website.website_users.filter(type='o', user=request.user).count():
+        raise Http404
+
+    if request.POST:
+        form_website = FormWebsite(request.POST, instance=website)
+
+        if form_website.is_valid():
+            if form_website.save():
+                return HttpResponseRedirect(website.get_absolute_url())
+    else:
+        form_website = FormWebsite(instance=website)
+
+    return render_to_response(
+            'ads/website_edit.html',
             locals(),
             context_instance=RequestContext(request),
             )

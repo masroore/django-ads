@@ -1,0 +1,18 @@
+{% extends "admin/change_form.html" %}
+
+{% load i18n %}
+
+{% block extrahead %}{{ block.super }}
+
+<script src="/media/js/jquery-packed.js"></script>
+<script>
+    $(document).ready(function(){
+        $('.move_to_submit_row').insertBefore('.submit-row>input:first');
+    });
+</script>
+{% endblock extrahead %}
+
+{% block content %}{{ block.super }}
+<input value="{% trans "Users" %}" onclick="javascript: window.location='/admin/ads/advertiseruser/?advertiser__id__exact={{ original.id }}'" class="move_to_submit_row" type="button"/>
+{% endblock content %}
+

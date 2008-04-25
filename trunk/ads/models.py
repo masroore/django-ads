@@ -75,7 +75,7 @@ class AdvertiserUser(models.Model):
 
 class Website(models.Model):
     name = models.CharField(max_length=50)
-    url = models.URLField(null=True, blank=True)
+    url = models.URLField(null=True, blank=True, verify_exists=False)
     enabled = models.BooleanField(blank=True, default=True)
     since = models.DateTimeField(blank=True, default=datetime.now)
 

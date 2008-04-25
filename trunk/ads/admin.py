@@ -13,12 +13,14 @@ class AdvertiserAdmin(ModelAdmin):
     pass
 
 class AdvertiserUserAdmin(ModelAdmin):
+    list_display = ('advertiser','user','type',)
     raw_id_fields = ('user','advertiser',)
 
 class WebsiteAdmin(ModelAdmin):
     pass
 
 class WebsiteUserAdmin(ModelAdmin):
+    list_display = ('website','user','type',)
     raw_id_fields = ('user','website',)
 
 class AdModelAdmin(ModelAdmin):
