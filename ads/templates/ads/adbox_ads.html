@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n htmlentities %}
 
 <html>
     <head>
@@ -16,8 +16,8 @@
             {% for ad in ads %}
             <div class="ads_ad">
                 <a href="{{ ad.get_hit_url }}?referer={{ referer }}" target="_parent">
-                    <h6>{{ ad.title }}</h6>
-                    <span class="ads_description">{{ ad.description }}</span>
+                    <h6>{{ ad.title|htmlentities }}</h6>
+                    <span class="ads_description">{{ ad.description|htmlentities }}</span>
                     <span class="ads_url">{{ ad.get_short_url }}</span>
                 </a>
             </div>
