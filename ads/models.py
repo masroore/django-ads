@@ -1,4 +1,4 @@
-import re
+import re, simplejson
 from datetime import datetime, timedelta
 
 from django.db import models
@@ -6,6 +6,9 @@ from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.dispatch import dispatcher
+
+import app_settings, app_signals
 
 USER_TYPES = (
     ('o', _('Owner')),
@@ -209,9 +212,14 @@ class Ad(models.Model):
         m = re.match('(http://|)([^/\?]*)', self.url, re.I | re.M)
         return m and m.group(2) or ''
 
-    def __store_hit(self, url, type):
+    def __store_hit(self, url, type, meta):
         # Get URL from database
         website_url, new = URL.objects.get_or_create(url=url)
+
+        # Dispatches signal to get IP info for location and others informations
+        dispatcher.send(signal=app_signals.get_meta_info, sender=self, meta=meta) or {}
+
+        tmp_meta = dict([(k, meta[k]) for k in app_settings.ADS_STORED_META_KEYS])
 
         # Returns the log created
         return Log.objects.create(
@@ -219,9 +227,10 @@ class Ad(models.Model):
                 type=type,
                 url=url,
                 website_url=website_url,
+                meta=simplejson.dumps(tmp_meta),
                 )
 
-    def hit_view(self, url):
+    def hit_view(self, url, meta):
         # Increment count
         self.view_count = self.view_count + 1
         
@@ -232,9 +241,9 @@ class Ad(models.Model):
         self.last_view = datetime.now()
         self.save()
 
-        return self.__store_hit(url, 'v')
+        return self.__store_hit(url, 'v', meta)
 
-    def hit_click(self, url):
+    def hit_click(self, url, meta):
         # Increment count
         self.click_count = self.click_count + 1
         
@@ -268,7 +277,7 @@ class Ad(models.Model):
         # Save the Ad (self)
         self.save()
 
-        return self.__store_hit(url, 'c')
+        return self.__store_hit(url, 'c', meta)
 
     class Meta:
         ordering = ('title',)
@@ -279,6 +288,7 @@ class Log(models.Model):
     type = models.CharField(max_length=1, choices=LOG_TYPES)
     url = models.URLField(verify_exists=False)
     website_url = models.ForeignKey('URL', related_name='log_entries', null=True, blank=True)
+    meta = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
         return unicode(self.date)
@@ -312,7 +322,6 @@ class CreditsLog(models.Model):
 
 # SIGNALS AND LISTENERS
 from django.db.models import signals
-from django.dispatch import dispatcher
 
 # Show
 def show_pre_save(sender, instance, signal, *args, **kwargs):

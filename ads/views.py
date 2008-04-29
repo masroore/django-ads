@@ -310,7 +310,7 @@ def ad_hit(request, advertiser_id, ad_id):
     try:
         #advertiser = get_object_or_404(Advertiser, id=advertiser_id)
         ad = Ad.objects.get(id=ad_id)
-        ad.hit_click(request.GET['referer'])
+        ad.hit_click(request.GET['referer'], request.META)
 
         return HttpResponseRedirect(ad.url)
     except Ad.DoesNotExist, e:
@@ -407,7 +407,7 @@ def adbox_get_ads(request, website_id, adbox_id):
     ads = ads[:adbox.ad_model.ads_quantity]
 
     # Stores the view hit in each of selected ads
-    for ad in ads: ad.hit_view(referer)
+    for ad in ads: ad.hit_view(referer, request.META)
 
     return render_to_response(
             'ads/adbox_ads.html',
