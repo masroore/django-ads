@@ -219,7 +219,7 @@ class Ad(models.Model):
         # Dispatches signal to get IP info for location and others informations
         dispatcher.send(signal=app_signals.get_meta_info, sender=self, meta=meta) or {}
 
-        tmp_meta = dict([(k, meta[k]) for k in app_settings.ADS_STORED_META_KEYS])
+        tmp_meta = dict([(k, meta[k]) for k in app_settings.ADS_STORED_META_KEYS if k in meta])
 
         # Returns the log created
         return Log.objects.create(
