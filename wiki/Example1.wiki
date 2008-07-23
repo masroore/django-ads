@@ -1,9 +1,9 @@
-#summary An example to help you to use django-ads
+#summary An example to help you to use django-ads Ad Show function
 #labels Example,Featured
 
-= Insert 3 ads by admin =
+= Insert 3 ad show's by admin =
 
-== Ad 1 ==
+== Ad Show 1 ==
 
 {{{
 name: 'ad 1'
@@ -12,7 +12,7 @@ template_body: 'my ad number 1'
 url_pattern: None
 }}}
 
-== Ad 2 ==
+== Ad Show 2 ==
 
 {{{
 name: 'ad 2'
@@ -21,7 +21,7 @@ template_body: 'my ad number 2'
 url_pattern: '/test/[\w_-]+/'
 }}}
 
-== Ad 3 ==
+== Ad Show 3 ==
 
 {{{
 name: 'ad 3'
