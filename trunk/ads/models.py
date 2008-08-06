@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 from django.db import models
 from django.template.defaultfilters import slugify
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.dispatch import dispatcher

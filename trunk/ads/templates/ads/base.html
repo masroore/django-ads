@@ -9,11 +9,11 @@
         <meta name="another" content="Other words to be ignored">
         {% endblock meta %}
         {% block style %}
-        <link rel="stylesheet" href="/media/ads/ads.css"/>
+        <link rel="stylesheet" href="{{ MEDIA_URL }}ads/ads.css"/>
         {% endblock %}
         {% block scripts %}
-        <script src="/media/ads/jquery.js"></script>
-        <script src="/media/ads/ads.js"></script>
+        <script src="{{ MEDIA_URL }}ads/jquery.js"></script>
+        <script src="{{ MEDIA_URL }}ads/ads.js"></script>
         {% endblock %}
     </head>
     <body>
@@ -37,7 +37,7 @@
                 {% block ads_demo %}
                 <div id="adbox_2"/>
                 <script type="text/javascript">cont_id='adbox_2';website_id=1;adbox_id=2;adbox_height=300;adbox_width=350</script>
-                <script type="text/javascript" src="http://localhost:8000/media/ads/ads_client.js"></script>
+                <script type="text/javascript" src="http://dev.cranes.com/media/ads/ads_client.js"></script>
                 {% endblock ads_demo %}
             </div>
         </div>
