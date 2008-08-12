@@ -6,7 +6,15 @@ from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.conf import settings
-from django.dispatch import dispatcher
+
+try:
+    from django.dispatch import Signal
+
+    signals_refactored = True
+except ImportError:
+    from django.dispatch import dispatcher
+
+    signals_refactored = False
 
 import app_settings, app_signals
 
@@ -217,7 +225,10 @@ class Ad(models.Model):
         website_url, new = URL.objects.get_or_create(url=url)
 
         # Dispatches signal to get IP info for location and others informations
-        dispatcher.send(signal=app_signals.get_meta_info, sender=self, meta=meta) or {}
+        if signals_refactored:
+            app_signals.get_meta_info.send(sender=self, meta=meta)# or {}
+        else:
+            dispatcher.send(signal=app_signals.get_meta_info, sender=self, meta=meta)# or {}
 
         tmp_meta = dict([(k, meta[k]) for k in app_settings.ADS_STORED_META_KEYS if k in meta])
 
@@ -328,7 +339,10 @@ def show_pre_save(sender, instance, signal, *args, **kwargs):
     instance.slug = slugify(instance.name)
     instance.group = slugify(instance.group)
 
-dispatcher.connect(show_pre_save, signal=signals.pre_save, sender=Show)
+if signals_refactored:
+    signals.pre_save.connect(show_pre_save, sender=Show)
+else:
+    dispatcher.connect(show_pre_save, signal=signals.pre_save, sender=Show)
 
 # CreditsLog
 def creditslog_post_save(sender, instance, signal, *args, **kwargs):
@@ -340,5 +354,8 @@ def creditslog_post_save(sender, instance, signal, *args, **kwargs):
         instance.saved_to_ad = True
         instance.save()
 
-dispatcher.connect(creditslog_post_save, signal=signals.post_save, sender=CreditsLog)
+if signals_refactored:
+    signals.post_save.connect(creditslog_post_save, sender=CreditsLog)
+else:
+    dispatcher.connect(creditslog_post_save, signal=signals.post_save, sender=CreditsLog)
 
