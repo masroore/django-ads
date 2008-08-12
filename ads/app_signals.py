@@ -10,7 +10,9 @@ def get_meta_info(sender, meta):
 
 dispatcher.connect(get_meta_info, signal=ads_signals.get_meta_info)
 """
-from django.dispatch import Signal
-
-get_meta_info = Signal()
+try:
+    from django.dispatch import Signal
+    get_meta_info = Signal()
+except ImportError:
+    get_meta_info = object()
 
