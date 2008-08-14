@@ -5,9 +5,9 @@
         {% block meta %}{% endblock %}
         {% block style %}
         <link rel="stylesheet" href="{{ settings.ADS_MEDIA_URL }}ads_client.css"/>
-        <link rel="stylesheet" href="{{ adbox.ad_model.get_css_url }}"/>
-        {% if adbox.styleset %}
-        <link rel="stylesheet" href="{{ adbox.styleset.get_css_url }}"/>
+        {% if adbox.ad_model.css %}<link rel="stylesheet" href="{{ adbox.ad_model.css.url }}"/>{% endif %}
+        {% if adbox.styleset and adbox.styleset.css %}
+        <link rel="stylesheet" href="{{ adbox.styleset.css.url }}"/>
         {% endif %}
         {% endblock %}
     </head>
