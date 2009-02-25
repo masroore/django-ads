@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
-from django.contrib.djangoplus.shortcuts import render_to_json
+from djangoplus.shortcuts import render_to_json
 from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.views.decorators.cache import never_cache

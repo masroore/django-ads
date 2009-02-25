@@ -18,7 +18,7 @@ def test_conditions(ad, context):
     tpl = "{% if "+ad.conditions+" %}1{% endif %}"
 
     if ADS_USE_DJANGOPLUS:
-        tpl = "{% load djangoplus %}" + tpl
+        tpl = "{% load djangoplus_tags %}" + tpl
 
     res = template.Template(tpl).render(context)
 
