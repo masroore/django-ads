@@ -1,0 +1,1 @@
+Project to create an application for help people to customize ads showing acording to URL/template/page and offers a full advertising system
